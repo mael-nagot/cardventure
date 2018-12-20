@@ -1,0 +1,16 @@
+{
+    "maps":
+    [
+        {
+            "id": 0,
+            "background": "backgroundForest",
+            "mapComponents" : [1]
+        },
+        {
+            "id": 1,
+            "background": "meadow",
+            "mapComponents" : [2]
+        }
+    
+    ]
+}
