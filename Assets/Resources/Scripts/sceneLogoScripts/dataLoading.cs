@@ -5,35 +5,34 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
-public class dataLoading : MonoBehaviour {
+public class DataLoading : MonoBehaviour {
 
 	[SerializeField]
 	private float _waitTime;
-	private float _timer;
-
 
 	void Awake()
 	{
 		DOTween.Init();
 	}
 
-	void Start () {
-		_timer = 0;
-		Sequence mySequence = DOTween.Sequence();
-		mySequence.Insert(0,GameObject.Find("Logo").GetComponent<Image>().DOFade(255,_waitTime*1000*1.5f/5))
-		   		.Insert(0.6f*_waitTime,GameObject.Find("Logo").GetComponent<Image>().DOFade(-255,_waitTime*1000/5));  
-		mySequence.Play();
-		
-		//GameObject.Find("Logo").GetComponent<Image>().DOFade(0,_waitTime*2000);
+	IEnumerator Start()
+	{
+		yield return new WaitForSeconds(0.2f);
+		Sequence logoDisplaySequence = DOTween.Sequence();
+		logoDisplaySequence
+		   		.Append(GameObject.Find("Logo").transform.DOScale(new Vector3(1,1,1),_waitTime*1.5f/5))
+ 	   		    .Join(GameObject.Find("Logo").GetComponent<Image>().DOFade(1,_waitTime*2.5f/5))
+				.AppendInterval(1)
+				.Append(GameObject.Find("Logo").GetComponent<Image>().DOFade(0,_waitTime*1.5f/5))
+				.OnComplete(() => LoadNextScene());
+		logoDisplaySequence.Play();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		_timer += Time.deltaTime;
-		if (_timer >= _waitTime)
+
+	void Update() {
+		if (Input.touchCount > 0)
 		{
-			LoadNextScene();	
-		}
+			LoadNextScene();
+		} 
 	}
 
 	void LoadNextScene() {
