@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 105791184}
   - component: {fileID: 105791183}
   - component: {fileID: 105791182}
+  - component: {fileID: 105791186}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -194,6 +195,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &105791186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 105791181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a24178fcb37724aab0ccbc1d913768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonFrench: {fileID: 379973564}
+  ButtonEnglish: {fileID: 1309994544}
 --- !u!1 &106396644
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +282,51 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 106396644}
+--- !u!1 &302417857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 302417859}
+  - component: {fileID: 302417858}
+  m_Layer: 5
+  m_Name: LocalizationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &302417858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 302417857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cfe0e4aea6df9f4aa0588d5bb8dd776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &302417859
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 302417857}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3297134, y: 0.3297134, z: 0.3297134}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 648.8567, y: 100.77227}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &324575109
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +399,6 @@ GameObject:
   - component: {fileID: 379973563}
   - component: {fileID: 379973566}
   - component: {fileID: 379973565}
-  - component: {fileID: 379973567}
   - component: {fileID: 379973564}
   m_Layer: 5
   m_Name: ButtonFrench
@@ -441,17 +499,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 379973562}
---- !u!114 &379973567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 379973562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49a24178fcb37724aab0ccbc1d913768, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1309994542
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +509,6 @@ GameObject:
   - component: {fileID: 1309994543}
   - component: {fileID: 1309994546}
   - component: {fileID: 1309994545}
-  - component: {fileID: 1309994547}
   - component: {fileID: 1309994544}
   m_Layer: 5
   m_Name: ButtonEnglish
@@ -563,17 +609,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1309994542}
---- !u!114 &1309994547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1309994542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49a24178fcb37724aab0ccbc1d913768, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1517628116
 GameObject:
   m_ObjectHideFlags: 0
