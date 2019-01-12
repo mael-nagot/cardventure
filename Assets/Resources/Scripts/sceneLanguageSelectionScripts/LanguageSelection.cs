@@ -45,8 +45,11 @@ public class LanguageSelection : MonoBehaviour
         }
     }
 
+    //Loading Localization and saving the language choice in the game data json file
     private void loadLocalization(string language)
     {
         LocalizationManager.instance.LoadLocalizedText("localizedText_" + language + ".json");
+        DataController.instance.gameData.localizationLanguage = language;
+        DataController.instance.SaveGameData();
     }
 }

@@ -4,21 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System;
 
 public class DataLoading : MonoBehaviour
 {
 
     [SerializeField]
     private float waitTime;
-    private string localizationLanguage;
 
     void Awake()
     {
         DOTween.Init();
-        if (localizationLanguage != null)
-        {
-            LocalizationManager.instance.LoadLocalizedText("localizedText_" + localizationLanguage + ".json");
-        }
     }
 
     IEnumerator Start()
@@ -32,6 +28,10 @@ public class DataLoading : MonoBehaviour
                 .Append(GameObject.Find("Logo").GetComponent<Image>().DOFade(0, waitTime * 1.5f / 5))
                 .OnComplete(() => LoadNextScene());
         logoDisplaySequence.Play();
+        if (!String.IsNullOrEmpty(DataController.instance.gameData.localizationLanguage))
+        {
+            LocalizationManager.instance.LoadLocalizedText("localizedText_" + DataController.instance.gameData.localizationLanguage + ".json");
+        }
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class DataLoading : MonoBehaviour
 
     void LoadNextScene()
     {
-        if (localizationLanguage != null)
+        if (!String.IsNullOrEmpty(DataController.instance.gameData.localizationLanguage))
         {
             StartCoroutine("checkLocalizationReadyAndLoadMenuScene");
         }
