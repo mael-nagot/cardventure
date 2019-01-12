@@ -1,6 +1,6 @@
 {
   "items": [
-    { "key": "game_title", "value": "Quiz Game" },
-    { "key": "start_button", "value": "Start Game" }
+    { "key": "game_title", "value": "TanCard" },
+    { "key": "new_game_menu", "value": "New Game" }
   ]
 }

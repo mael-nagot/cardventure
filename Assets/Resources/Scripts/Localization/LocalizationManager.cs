@@ -5,7 +5,7 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour
 {
-
+    // Code taken fro, this tutorial https://unity3d.com/fr/learn/tutorials/topics/scripting/localized-text-editor-script?playlist=17117
     public static LocalizationManager instance;
 
     private Dictionary<string, string> localizedText;
@@ -30,34 +30,32 @@ public class LocalizationManager : MonoBehaviour
     public void LoadLocalizedText(string fileName)
     {
         localizedText = new Dictionary<string, string>();
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+        string filePath;
+        string dataAsJson;
 
-        if (File.Exists(filePath))
+        /* 
+        Cannot just read the files in the streaming path on Android since it is stored in an apk.
+        Need a www reader for that specific case.
+        */
+        if (Application.platform == RuntimePlatform.Android)
         {
-            string dataAsJson;
+            filePath = Path.Combine("jar:file://" + Application.dataPath + "!assets/", fileName);
+            WWW reader = new WWW(filePath);
+            while (!reader.isDone) { }
 
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                WWW reader = new WWW(filePath);
-                while (!reader.isDone) { }
-
-                dataAsJson = reader.text;
-            }
-            else
-            {
-                dataAsJson = File.ReadAllText(filePath);
-            }
-
-            LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
-
-            for (int i = 0; i < loadedData.items.Length; i++)
-            {
-                localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
-            }
+            dataAsJson = reader.text;
         }
         else
         {
-            Debug.LogError("Cannot find localization file!");
+            filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+            dataAsJson = File.ReadAllText(filePath);
+        }
+
+        LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+
+        for (int i = 0; i < loadedData.items.Length; i++)
+        {
+            localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
         }
 
         isReady = true;
