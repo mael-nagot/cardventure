@@ -1,6 +1,8 @@
 {
   "items": [
     { "key": "game_title", "value": "TanCard" },
-    { "key": "new_game_menu", "value": "Nouvelle Partie" }
+    { "key": "new_game_menu", "value": "Nouvelle Partie" },
+    { "key": "continue_game_menu", "value": "Continuer" },
+    { "key": "settings_game_menu", "value": "Paramètres" }
   ]
 }

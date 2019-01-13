@@ -41,7 +41,7 @@ public class LanguageSelection : MonoBehaviour
                 .Append(GameObject.Find("TextLanguage").GetComponent<Text>().DOFade(0, 1))
                 .Join(GameObject.Find("ButtonFrench").GetComponent<Image>().DOFade(0, 1))
                 .Join(GameObject.Find("ButtonEnglish").GetComponent<Image>().DOFade(0, 1))
-                .OnComplete(() => SceneManager.LoadScene ("map"));
+                .OnComplete(() => SceneManager.LoadScene ("menu"));
         }
     }
 

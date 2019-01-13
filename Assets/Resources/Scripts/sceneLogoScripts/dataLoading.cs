@@ -61,6 +61,6 @@ public class DataLoading : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene("map");
+        SceneManager.LoadScene("menu");
     }
 }

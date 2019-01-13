@@ -33,7 +33,7 @@ public class DataController : MonoBehaviour
         */
         string filePath;
         string dataAsJson = null;
-
+        Debug.Log(Application.persistentDataPath);
         filePath = Path.Combine(Application.persistentDataPath, gameDataFileName);
         if (File.Exists(filePath))
         {
