@@ -10,10 +10,15 @@ public class MenuController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.2f);
         Sequence flagMenuItemAnimation = DOTween.Sequence();
+        Color menuItemTargetColor = new Color32(79,42,8,220);
         flagMenuItemAnimation
-                .Append(GameObject.Find("NewGame").GetComponent<Text>().DOColor(new Color32(182,226,248,200), 2))
-                .Join(GameObject.Find("Continue").GetComponent<Text>().DOColor(new Color32(182,226,248,200), 2))
-                .Join(GameObject.Find("Settings").GetComponent<Text>().DOColor(new Color32(182,226,248,200), 2))
+                .Append(GameObject.Find("NewGame").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
+                .Join(GameObject.Find("Continue").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
+				.SetLoops(-1, LoopType.Yoyo);
+        Sequence leaveParticlesSystemAnimation = DOTween.Sequence();
+        float xParticleSytem = GameObject.Find("ParticleSystem").transform.position.x;
+        leaveParticlesSystemAnimation
+                .Append(GameObject.Find("ParticleSystem").transform.DOMoveX(xParticleSytem - 8, 2))
 				.SetLoops(-1, LoopType.Yoyo);
     }
 	
