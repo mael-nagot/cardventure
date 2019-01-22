@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114158604954328094}
   m_Layer: 0
   m_Name: DataController
-  m_TagString: Untagged
+  m_TagString: DataController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,3 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c047d66c5571dbd43a7a8d997916d1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filePath: 

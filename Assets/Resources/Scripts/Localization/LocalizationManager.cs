@@ -5,14 +5,17 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour
 {
-    // Code taken fro, this tutorial https://unity3d.com/fr/learn/tutorials/topics/scripting/localized-text-editor-script?playlist=17117
+    // Code taken from this tutorial https://unity3d.com/fr/learn/tutorials/topics/scripting/localized-text-editor-script?playlist=17117
     public static LocalizationManager instance;
 
     private Dictionary<string, string> localizedText;
     private bool isReady = false;
     private string missingTextString = "Localized text not found";
 
-    // Use this for initialization
+    /*
+    Use Singleton pattern for the localization manager object to have it never destroyed and only once instance of it.
+    It needs to be present in all the scenes.
+     */
     void Awake()
     {
         if (instance == null)

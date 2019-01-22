@@ -6,15 +6,20 @@ using System.IO;
 public class DataController : MonoBehaviour
 {
 
-	public static DataController instance;
+    public static DataController instance;
     public GameData gameData;
-	private bool isReady = false;
+    private bool isReady = false;
     private string gameDataFileName = "data.json";
-    // Use this for initialization
+    public string filePath;
+
+    /*
+    Use Singleton pattern for the data controller object to have it never destroyed and only once instance of it.
+    It needs to be present in all the scenes.
+     */
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-		if (instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -22,18 +27,20 @@ public class DataController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        filePath = Path.Combine(Application.persistentDataPath, gameDataFileName);
         LoadGameData();
     }
 
-    private void LoadGameData()
+    /*
+    Load the game data from the save file. If no save file exists, then it creates one.
+     */
+    public void LoadGameData()
     {
         /* 
         Cannot just read the files in the streaming path on Android since it is stored in an apk.
         Need a www reader for that specific case.
         */
-        string filePath;
         string dataAsJson = null;
-        filePath = Path.Combine(Application.persistentDataPath, gameDataFileName);
         if (File.Exists(filePath))
         {
             dataAsJson = File.ReadAllText(filePath);
@@ -44,15 +51,12 @@ public class DataController : MonoBehaviour
             gameData = new GameData();
             SaveGameData();
         }
-		isReady = true;
+        isReady = true;
     }
 
     public void SaveGameData()
     {
-        string filePath;
         string dataAsJson = JsonUtility.ToJson(gameData);
-
-        filePath = Path.Combine(Application.persistentDataPath, gameDataFileName);
 
         File.WriteAllText(filePath, dataAsJson);
     }

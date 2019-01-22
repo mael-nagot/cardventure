@@ -20,6 +20,7 @@ public class DataLoading : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitForSeconds(0.2f);
+        // Tween to make the logo fade in and then fade out after a while
         Sequence logoDisplaySequence = DOTween.Sequence();
         logoDisplaySequence
                 .Append(GameObject.Find("Logo").transform.DOScale(new Vector3(1, 1, 1), waitTime * 1.5f / 5))
@@ -27,7 +28,7 @@ public class DataLoading : MonoBehaviour
                 .AppendInterval(1)
                 .Append(GameObject.Find("Logo").GetComponent<Image>().DOFade(0, waitTime * 1.5f / 5))
                 .OnComplete(() => LoadNextScene());
-        logoDisplaySequence.Play();
+        // Load the localization if a save file exists and a language has already been set.
         if (!String.IsNullOrEmpty(DataController.instance.gameData.localizationLanguage))
         {
             LocalizationManager.instance.LoadLocalizedText("localizedText_" + DataController.instance.gameData.localizationLanguage + ".json");
@@ -36,6 +37,7 @@ public class DataLoading : MonoBehaviour
 
     void Update()
     {
+        // If clicking on the screen, skip the logo presentation
         if (Input.touchCount > 0)
         {
             LoadNextScene();
@@ -44,6 +46,10 @@ public class DataLoading : MonoBehaviour
 
     void LoadNextScene()
     {
+        /* 
+        If a save file exists and a language has been set, wait for the localization to be loaded to load the menu
+        otherwise, load the language selection scene.
+        */
         if (!String.IsNullOrEmpty(DataController.instance.gameData.localizationLanguage))
         {
             StartCoroutine("checkLocalizationReadyAndLoadMenuScene");
@@ -54,6 +60,7 @@ public class DataLoading : MonoBehaviour
         }
     }
 
+    // Wait for the localization to be loaded before loading the manu scene
     private IEnumerator checkLocalizationReadyAndLoadMenuScene()
     {
         while (!LocalizationManager.instance.GetIsReady())

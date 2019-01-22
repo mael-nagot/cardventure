@@ -9,11 +9,10 @@ namespace Tests
 {
     public class LocalizationPlayTests
     {
-
-		// This test checks that the Localization Manager is instantiated from the very first scene.
         [UnityTest]
         public IEnumerator TestLocalizationManagerIsInstantiatedInFirstScene()
         {
+			Debug.Log("This test checks that the Localization Manager is instantiated from the very first scene.");
             SceneManager.LoadScene("logo", LoadSceneMode.Single);
             yield return null;
             GameObject localizationManager = GameObject.FindWithTag("LocalizationManager");
@@ -21,15 +20,15 @@ namespace Tests
 			destroyAllGameObjects();
         }
 
-		// This test checks that the LoadLocalizedText actually loads the right localization file and that the GetLocalizedValue retrieve the expected localization value from a key.
         [UnityTest]
 		[TestCase("localizedText_en.json","new_game_menu","New Game", ExpectedResult = null)]
 		[TestCase("localizedText_fr.json","continue_game_menu","Continuer", ExpectedResult = null)]
         public IEnumerator TestLoadingLocalizationFileAndGettingValue(string file, string key, string value)
         {
+			Debug.Log("This test checks that the LoadLocalizedText actually loads the right localization file and that the GetLocalizedValue retrieve the expected localization value from a key.");
 			yield return null;
 			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/LocalizationManager") as GameObject);
-			yield return new WaitForSeconds(1);
+			yield return null;
 			LocalizationManager.instance.LoadLocalizedText(file);
 			
 			while(!LocalizationManager.instance.GetIsReady())
@@ -40,12 +39,12 @@ namespace Tests
 			destroyAllGameObjects();
         }
 
-		// This test checks that a text object instantiated with the LocalizedText script and a key is automatically localized.
         [UnityTest]
 		[TestCase("localizedText_en.json","new_game_menu","New Game", ExpectedResult = null)]
 		[TestCase("localizedText_fr.json","continue_game_menu","Continuer", ExpectedResult = null)]
         public IEnumerator TestTextObjectBeingLocalized(string file, string key, string value)
         {
+			Debug.Log("This test checks that a text object instantiated with the LocalizedText script and a key is automatically localized.");
 			yield return null;
 			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/LocalizationManager") as GameObject);
 			yield return new WaitForSeconds(1);

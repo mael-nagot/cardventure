@@ -9,12 +9,15 @@ public class MenuController : MonoBehaviour {
     IEnumerator Start()
     {
         yield return new WaitForSeconds(0.2f);
-        Sequence flagMenuItemAnimation = DOTween.Sequence();
+        // Tween to make the menu items slightly changing color over time
+        Sequence menuItemAnimation = DOTween.Sequence();
         Color menuItemTargetColor = new Color32(79,42,8,220);
-        flagMenuItemAnimation
+        menuItemAnimation
                 .Append(GameObject.Find("NewGame").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
                 .Join(GameObject.Find("Continue").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
 				.SetLoops(-1, LoopType.Yoyo);
+        
+        // Tween to make the Particles system displaying the leaves moving right and left so the leaves spread everywhere
         Sequence leaveParticlesSystemAnimation = DOTween.Sequence();
         float xParticleSytem = GameObject.Find("ParticleSystem").transform.position.x;
         leaveParticlesSystemAnimation
@@ -22,7 +25,6 @@ public class MenuController : MonoBehaviour {
 				.SetLoops(-1, LoopType.Yoyo);
     }
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
