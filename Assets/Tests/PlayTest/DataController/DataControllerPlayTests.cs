@@ -12,7 +12,6 @@ namespace Tests
     {
 
         [UnityTest]
-		// This test checks that the data controller is instantiated on the very first scene loaded
         public IEnumerator TestDataControllerIsInstantiatedInFirstScene()
         {
 			Debug.Log("This test checks that the data controller is instantiated on the very first scene loaded");
@@ -23,7 +22,6 @@ namespace Tests
         }
 
         [UnityTest]
-		// This test checks that a test data save file is correctly loaded using the LoadGameData() of the data controller
         public IEnumerator TestLoadDataFileOnAnExistingFile()
         {
 			Debug.Log("This test checks that a test data save file is correctly loaded using the LoadGameData() of the data controller");
@@ -42,7 +40,6 @@ namespace Tests
         }
 
         [UnityTest]
-		// This test checks that the LoadGameData() is still creating a gameData object when the loading file has not been created
         public IEnumerator TestLoadDataFileOnANonExistingFileCreatesGameDataObject()
         {
 			Debug.Log("This test checks that the LoadGameData() is still creating a gameData object when the loading file has not been created");
@@ -62,7 +59,6 @@ namespace Tests
         }
 
         [UnityTest]
-		// This test checks that the LoadGameData() creates a save file if there is none existing
         public IEnumerator TestLoadDataFileCreatesSaveFileIfNoneExists()
         {
 			Debug.Log("This test checks that the LoadGameData() creates a save file if there is none existing");
@@ -82,7 +78,6 @@ namespace Tests
         }
 
         [UnityTest]
-		// This test checks that when loading a save file and saving it directly, the file is not modified (Load and Save are consistant)
         public IEnumerator LoadingAFileAndSavingItDoesNotModifyIt()
         {
 			Debug.Log("This test checks that when loading a save file and saving it directly, the file is not modified (Load and Save are consistant)");
