@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.Networking;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class LocalizationManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        
         DontDestroyOnLoad(gameObject);
     }
 
@@ -43,6 +44,7 @@ public class LocalizationManager : MonoBehaviour
         if (Application.platform == RuntimePlatform.Android)
         {
             filePath = Path.Combine("jar:file://" + Application.dataPath + "!assets/", fileName);
+            // UnityWebRequest reader = new UnityWebRequest(filePath);
             WWW reader = new WWW(filePath);
             while (!reader.isDone) { }
 
