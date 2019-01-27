@@ -11,6 +11,7 @@ public class DataLoading : MonoBehaviour
 
     [SerializeField]
     private float waitTime;
+    private bool nextSceneIsLoading = false;
 
     void Awake()
     {
@@ -37,10 +38,12 @@ public class DataLoading : MonoBehaviour
 
     void Update()
     {
+
         // If clicking on the screen, skip the logo presentation
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && !nextSceneIsLoading)
         {
             LoadNextScene();
+            nextSceneIsLoading = true;
         }
     }
 
@@ -68,6 +71,6 @@ public class DataLoading : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene("menu");
+        StartCoroutine(LoadingScreenController.instance.loadScene("menu"));
     }
 }

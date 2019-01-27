@@ -24,7 +24,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Loading screen
   - 
   - 
   - 
@@ -45,4 +45,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 2785066187
+    locked: 0
+  - name: LoadingScreen
+    uniqueID: 2308282303
     locked: 0

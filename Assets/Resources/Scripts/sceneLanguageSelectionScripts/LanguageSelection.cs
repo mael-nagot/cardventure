@@ -14,13 +14,13 @@ public class LanguageSelection : MonoBehaviour
     {
         // Make the flag buttons loading the localization when clicking on them
         ButtonFrench.onClick.AddListener(() => loadLocalization("fr"));
-        ButtonEnglish.onClick.AddListener(() => loadLocalization("en"));        
+        ButtonEnglish.onClick.AddListener(() => loadLocalization("en"));
     }
 
     IEnumerator Start()
     {
         yield return new WaitForSeconds(0.2f);
-        
+
         // Tween to make the flags and the text fade in when the scene is loaded
         Sequence flagFadeIn = DOTween.Sequence();
         flagFadeIn
@@ -33,21 +33,24 @@ public class LanguageSelection : MonoBehaviour
                 .Append(GameObject.Find("ButtonFrench").GetComponent<Image>().transform.DOScale(new Vector3(0.8f, 0.8f, 1), 1))
                 .Join(GameObject.Find("ButtonEnglish").GetComponent<Image>().transform.DOScale(new Vector3(0.8f, 0.8f, 1), 1))
                 .SetLoops(-1, LoopType.Yoyo);
+        StartCoroutine(fadeOutFlagsAndLoadScene());
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator fadeOutFlagsAndLoadScene()
     {
-        if (LocalizationManager.instance.GetIsReady ())
+        while (!LocalizationManager.instance.GetIsReady())
         {
-            // Tween to fade out the flags and the text once the localization is fully loaded
-            Sequence flagFadeOut = DOTween.Sequence();
-            flagFadeOut
-                .Append(GameObject.Find("TextLanguage").GetComponent<Text>().DOFade(0, 1))
-                .Join(GameObject.Find("ButtonFrench").GetComponent<Image>().DOFade(0, 1))
-                .Join(GameObject.Find("ButtonEnglish").GetComponent<Image>().DOFade(0, 1))
-                .OnComplete(() => SceneManager.LoadScene ("menu"));
+            yield return null;
         }
+        // Tween to fade out the flags and the text once the localization is fully loaded
+        Sequence flagFadeOut = DOTween.Sequence();
+        flagFadeOut
+            .Append(GameObject.Find("TextLanguage").GetComponent<Text>().DOFade(0, 1))
+            .Join(GameObject.Find("ButtonFrench").GetComponent<Image>().DOFade(0, 1))
+            .Join(GameObject.Find("ButtonEnglish").GetComponent<Image>().DOFade(0, 1));
+        yield return new WaitForSeconds(1);
+        yield return StartCoroutine(LoadingScreenController.instance.loadScene("menu"));
     }
 
     //Loading Localization and saving the language choice in the game data json file
@@ -57,4 +60,5 @@ public class LanguageSelection : MonoBehaviour
         DataController.instance.gameData.localizationLanguage = language;
         DataController.instance.SaveGameData();
     }
+
 }
