@@ -23,6 +23,7 @@ public class MenuController : MonoBehaviour {
         leaveParticlesSystemAnimation
                 .Append(GameObject.Find("ParticleSystem").transform.DOMoveX(xParticleSytem - 8, 2))
 				.SetLoops(-1, LoopType.Yoyo);
+        yield return null;
     }
 	
 	void Update () {
