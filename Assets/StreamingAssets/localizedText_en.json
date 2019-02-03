@@ -3,6 +3,7 @@
     { "key": "game_title", "value": "TanCard" },
     { "key": "new_game_menu", "value": "New Game" },
     { "key": "continue_game_menu", "value": "Continue" },
-    { "key": "settings_game_menu", "value": "Settings" }
+    { "key": "settings_game_menu", "value": "Settings" },
+    { "key": "loading", "value": "Loading" }
   ]
 }

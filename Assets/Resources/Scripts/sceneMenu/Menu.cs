@@ -4,8 +4,15 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour {
+public class Menu : MonoBehaviour {
 
+    public Button buttonQuit;
+
+    void Awake()
+    {
+        // Make the flag buttons loading the localization when clicking on them
+        buttonQuit.onClick.AddListener(() => quitGame());
+    }
     IEnumerator Start()
     {
         yield return new WaitForSeconds(0.2f);
@@ -29,4 +36,9 @@ public class MenuController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void quitGame()
+    {
+        Application.Quit();
+    }
 }
