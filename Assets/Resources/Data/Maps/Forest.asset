@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 287d12ead2acb1c4184cf852ce258909, type: 3}
+  m_Name: Forest
+  m_EditorClassIdentifier: 
+  mapBackground: {fileID: 6623674065295375657, guid: b3b81ab33b6f6e34db3350b4d5f39c28,
+    type: 3}
+  eventBackground: {fileID: 0}
+  battleBackground: {fileID: 0}
+  bgmFile: BgmForest
+  bgsFile: BgsForest
+  level: 1
+  possibleTiles: 
+  possibleTroopsEncountered: 
+  possibleEvents: 

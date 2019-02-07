@@ -66,4 +66,14 @@ public class DataController : MonoBehaviour
     {
         return isReady;
     }
+
+    public bool isGameSessionStarted()
+    {
+        return gameData.isGameSessionStarted;
+    }
+
+    public int getLevel()
+    {
+        return gameData.level;
+    }
 }

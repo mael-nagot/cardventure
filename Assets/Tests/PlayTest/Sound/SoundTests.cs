@@ -17,7 +17,7 @@ namespace Tests
 			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/SoundController") as GameObject);
 			yield return null;
             string DefaultBGMLoaded = SoundController.instance.getCurrentBGMClip();
-            Assert.AreEqual(DefaultBGMLoaded, "BgmForest");
+            Assert.AreEqual(DefaultBGMLoaded, "BgmIntro");
         }
 
         [UnityTest]
@@ -58,7 +58,7 @@ namespace Tests
 			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/SoundController") as GameObject);
 			yield return null;
             int currentPointer = SoundController.instance.BGMPointer;
-            yield return SoundController.instance.playBackgroundMusic("BgmForest", 1, 0.01f);
+            yield return SoundController.instance.playBackgroundMusic("BgmIntro", 1, 0.01f);
             Assert.AreEqual(currentPointer,SoundController.instance.BGMPointer);
         }
 

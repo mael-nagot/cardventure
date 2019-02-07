@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour {
 
     public Button buttonQuit;
+    public Button buttonNewGame;
 
     void Awake()
     {
         // Make the flag buttons loading the localization when clicking on them
         buttonQuit.onClick.AddListener(() => quitGame());
+        buttonNewGame.onClick.AddListener(() => StartCoroutine(startNewGame()));
     }
     IEnumerator Start()
     {
@@ -40,5 +42,12 @@ public class Menu : MonoBehaviour {
     public void quitGame()
     {
         Application.Quit();
+    }
+
+    public IEnumerator startNewGame()
+    {
+        DataController.instance.gameData.isGameSessionStarted = true;
+        DataController.instance.gameData.level = 1;
+        yield return StartCoroutine(LoadingScreenController.instance.loadScene("map"));
     }
 }
