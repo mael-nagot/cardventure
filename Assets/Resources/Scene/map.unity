@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 0}
+  listOfMaps: {fileID: 11400000, guid: e37d8815ed109c848b572386e321ee3d, type: 2}
 --- !u!1001 &1367121122
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,4 +15,5 @@ public class Map : ScriptableObject
     public int[] possibleTiles;
     public int[] possibleTroopsEncountered;
     public int[] possibleEvents;
+
 }
