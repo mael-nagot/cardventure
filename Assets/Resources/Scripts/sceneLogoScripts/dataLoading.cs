@@ -40,7 +40,7 @@ public class DataLoading : MonoBehaviour
     {
 
         // If clicking on the screen, skip the logo presentation
-        if (Input.touchCount > 0 && !nextSceneIsLoading)
+        if (Lean.Touch.LeanTouch.Fingers.Count > 0 && !nextSceneIsLoading)
         {
             LoadNextScene();
             nextSceneIsLoading = true;

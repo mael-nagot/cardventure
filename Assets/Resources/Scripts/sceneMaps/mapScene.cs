@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
-public class mapScene : MonoBehaviour
+public class MapScene : MonoBehaviour
 {
     public Map map;
     public ListOfMaps listOfMaps;
-    // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
         string mapName = selectMap(DataController.instance.getLevel());
         map = listOfMaps.getMap(mapName);
         loadMapSound(map);
         loadMapBackground(map);
-        StartCoroutine(generateMap());
+        yield return StartCoroutine(generateMap());
+        StartCoroutine(shakeObject(1,2));
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -39,6 +39,23 @@ public class mapScene : MonoBehaviour
         GameObject.Instantiate(map.mapBackground);
     }
 
+    private IEnumerator shakeObject(int x, int y)
+    {
+        GameObject objectToAnimate = getMapItemFromCoordinates(x,y);
+        GameObject childObjectToShake = objectToAnimate.transform.GetChild(0).gameObject;
+        childObjectToShake.transform.Rotate(new Vector3(0,0,30));
+        Sequence shakeObjectSequence = DOTween.Sequence();
+        shakeObjectSequence
+                .Append(childObjectToShake.transform.DORotate(new Vector3(0,0,-30),1,RotateMode.Fast))
+                .SetLoops(-1, LoopType.Yoyo);
+        yield return null;
+    }
+
+    private GameObject getMapItemFromCoordinates(int x, int y)
+    {
+        return GameObject.Find("mapItem"+x+"-"+y);
+    }
+
     // To be rewriten, for now it is just to see how it looks
     private IEnumerator generateMap()
     {
@@ -47,7 +64,7 @@ public class mapScene : MonoBehaviour
         {
             for (int j = 0; j < 3; j++)
             {
-                if (!((i==0 && j==0) || (i==0 && j==2) || (i==6 && j==0) || (i==6 && j==2)))
+                if (!((i == 0 && j == 0) || (i == 0 && j == 2) || (i == 6 && j == 0) || (i == 6 && j == 2)))
                 {
                     float random = UnityEngine.Random.Range(0.0f, 10.0f);
                     string item = "";
@@ -68,6 +85,7 @@ public class mapScene : MonoBehaviour
                         item = "forestSword";
                     }
                     GameObject mapItem = GameObject.Instantiate(Resources.Load("Prefabs/Maps/MapItems/" + item) as GameObject);
+                    mapItem.name = "mapItem" + (i + 1) + "-" + (j + 1);
                     mapItem.transform.position = new Vector3((-6.80f + i * 2.27f), (2.15f - j * 2.19f), 4);
                     yield return null;
                 }
