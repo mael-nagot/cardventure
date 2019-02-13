@@ -15,7 +15,9 @@ public class MapScene : MonoBehaviour
         loadMapSound(map);
         loadMapBackground(map);
         yield return StartCoroutine(generateMap());
-        StartCoroutine(shakeObject(1,2));
+        shakeObject(1,2);
+        yield return new WaitForSeconds(5);
+        stopShakingObject(1,2);
     }
 
     void Update()
@@ -39,16 +41,16 @@ public class MapScene : MonoBehaviour
         GameObject.Instantiate(map.mapBackground);
     }
 
-    private IEnumerator shakeObject(int x, int y)
+    private void shakeObject(int x, int y)
     {
         GameObject objectToAnimate = getMapItemFromCoordinates(x,y);
-        GameObject childObjectToShake = objectToAnimate.transform.GetChild(0).gameObject;
-        childObjectToShake.transform.Rotate(new Vector3(0,0,30));
-        Sequence shakeObjectSequence = DOTween.Sequence();
-        shakeObjectSequence
-                .Append(childObjectToShake.transform.DORotate(new Vector3(0,0,-30),1,RotateMode.Fast))
-                .SetLoops(-1, LoopType.Yoyo);
-        yield return null;
+        StartCoroutine(objectToAnimate.GetComponent<MapItemManagement>().shakeObject());
+    }
+
+    private void stopShakingObject(int x, int y)
+    {
+        GameObject objectToAnimate = getMapItemFromCoordinates(x,y);
+        objectToAnimate.GetComponent<MapItemManagement>().stopShakingObject();
     }
 
     private GameObject getMapItemFromCoordinates(int x, int y)
