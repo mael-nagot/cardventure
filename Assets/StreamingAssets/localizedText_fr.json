@@ -4,6 +4,10 @@
     { "key": "new_game_menu", "value": "Nouvelle Partie" },
     { "key": "continue_game_menu", "value": "Continuer" },
     { "key": "settings_game_menu", "value": "Paramètres" },
-    { "key": "loading", "value": "Chargement" }
+    { "key": "loading", "value": "Chargement" },
+    { "key": "chest_map_item_description", "value": "Coffre" },
+    { "key": "quest_map_item_description", "value": "Inconnu" },
+    { "key": "sword_map_item_description", "value": "Combat" },
+    { "key": "rest_map_item_description", "value": "Repos" }
   ]
 }

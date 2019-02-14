@@ -16,8 +16,6 @@ public class MapScene : MonoBehaviour
         loadMapBackground(map);
         yield return StartCoroutine(generateMap());
         shakeObject(1,2);
-        yield return new WaitForSeconds(5);
-        stopShakingObject(1,2);
     }
 
     void Update()
@@ -87,8 +85,12 @@ public class MapScene : MonoBehaviour
                         item = "forestSword";
                     }
                     GameObject mapItem = GameObject.Instantiate(Resources.Load("Prefabs/Maps/MapItems/" + item) as GameObject);
+                    mapItem.transform.SetParent(GameObject.Find("Canvas").transform);
                     mapItem.name = "mapItem" + (i + 1) + "-" + (j + 1);
-                    mapItem.transform.position = new Vector3((-6.80f + i * 2.27f), (2.15f - j * 2.19f), 4);
+                    RectTransform rectTransform = mapItem.GetComponent<RectTransform>();
+                    rectTransform.anchoredPosition = new Vector3((-1000f + i * 330f), (300 - j * 300f), 4);
+                    rectTransform.pivot = new Vector2(0.5f, 1);
+                    mapItem.transform.localScale = new Vector3(1.2f,1.2f,1.2f);
                     yield return null;
                 }
             }

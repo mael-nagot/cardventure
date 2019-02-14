@@ -4,6 +4,10 @@
     { "key": "new_game_menu", "value": "New Game" },
     { "key": "continue_game_menu", "value": "Continue" },
     { "key": "settings_game_menu", "value": "Settings" },
-    { "key": "loading", "value": "Loading" }
+    { "key": "loading", "value": "Loading" },
+    { "key": "chest_map_item_description", "value": "Chest" },
+    { "key": "quest_map_item_description", "value": "Unknown" },
+    { "key": "sword_map_item_description", "value": "Fight" },
+    { "key": "rest_map_item_description", "value": "Rest" }
   ]
 }
