@@ -348,7 +348,6 @@ public class SoundController : MonoBehaviour
         string sePath = "Audio/SE/" + soundFile;
         AudioClip soundToPlay = Resources.Load<AudioClip>(sePath);
         yield return null;
-        Debug.Log(SEPointer);
         switch (SEPointer)
         {
             case 1:

@@ -8,6 +8,11 @@ public class Menu : MonoBehaviour {
 
     public Button buttonQuit;
     public Button buttonNewGame;
+    public Button buttonContinueGame;
+    public Button buttonHelp;
+    public Button buttonSettings;
+    [SerializeField]
+    private ParticleSystem particleSys;
 
     void Awake()
     {
@@ -28,9 +33,9 @@ public class Menu : MonoBehaviour {
         
         // Tween to make the Particles system displaying the leaves moving right and left so the leaves spread everywhere
         Sequence leaveParticlesSystemAnimation = DOTween.Sequence();
-        float xParticleSytem = GameObject.Find("ParticleSystem").transform.position.x;
+        float xParticleSytem = particleSys.transform.position.x;
         leaveParticlesSystemAnimation
-                .Append(GameObject.Find("ParticleSystem").transform.DOMoveX(xParticleSytem - 8, 2))
+                .Append(particleSys.transform.DOMoveX(xParticleSytem - 8, 2))
 				.SetLoops(-1, LoopType.Yoyo);
         yield return null;
     }
@@ -41,13 +46,21 @@ public class Menu : MonoBehaviour {
 
     public void quitGame()
     {
+        playClickSound();
         Application.Quit();
+    }
+
+    private void playClickSound()
+    {
+        StartCoroutine(SoundController.instance.playSE("click1",1));
     }
 
     public IEnumerator startNewGame()
     {
+        playClickSound();
         DataController.instance.gameData.isGameSessionStarted = true;
         DataController.instance.gameData.level = 1;
+        particleSys.gameObject.SetActive(false);
         yield return StartCoroutine(LoadingScreenController.instance.loadScene("map"));
     }
 }
