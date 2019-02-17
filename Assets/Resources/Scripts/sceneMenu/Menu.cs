@@ -16,9 +16,7 @@ public class Menu : MonoBehaviour {
 
     void Awake()
     {
-        // Make the flag buttons loading the localization when clicking on them
-        buttonQuit.onClick.AddListener(() => quitGame());
-        buttonNewGame.onClick.AddListener(() => StartCoroutine(startNewGame()));
+        buttonNewGame.onClick.AddListener(() => StartCoroutine(onStartNewGameTap()));
     }
     IEnumerator Start()
     {
@@ -35,8 +33,9 @@ public class Menu : MonoBehaviour {
         Sequence leaveParticlesSystemAnimation = DOTween.Sequence();
         float xParticleSytem = particleSys.transform.position.x;
         leaveParticlesSystemAnimation
-                .Append(particleSys.transform.DOMoveX(xParticleSytem - 8, 2))
-				.SetLoops(-1, LoopType.Yoyo);
+                .Append(particleSys.transform.DOMoveX(xParticleSytem - 19, 1))
+                .Append(particleSys.transform.DOMoveX(xParticleSytem, 1))
+				.SetLoops(-1);
         yield return null;
     }
 	
@@ -44,18 +43,12 @@ public class Menu : MonoBehaviour {
 		
 	}
 
-    public void quitGame()
-    {
-        playClickSound();
-        Application.Quit();
-    }
-
     private void playClickSound()
     {
         StartCoroutine(SoundController.instance.playSE("click1",1));
     }
 
-    public IEnumerator startNewGame()
+    public IEnumerator onStartNewGameTap()
     {
         playClickSound();
         DataController.instance.gameData.isGameSessionStarted = true;

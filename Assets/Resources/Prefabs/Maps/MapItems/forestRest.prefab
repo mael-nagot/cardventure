@@ -161,7 +161,7 @@ MonoBehaviour:
   IgnoreIsOverGui: 0
   RequiredSelectable: {fileID: 8399118593756023504}
   MinimumAge: 0.6
-  MaximumMovement: 5
+  MaximumMovement: 10
   OnHeldDown:
     m_PersistentCalls:
       m_Calls:

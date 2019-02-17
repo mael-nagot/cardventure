@@ -4,10 +4,16 @@
     { "key": "new_game_menu", "value": "Nouvelle Partie" },
     { "key": "continue_game_menu", "value": "Continuer" },
     { "key": "settings_game_menu", "value": "Paramètres" },
+    { "key": "help_menu", "value": "Aide" },
+    { "key": "quit_game_menu", "value": "Quitter" },
+    { "key": "quit_confirm", "value": "Voulez-vous vraiment quitter le jeu ?" },
     { "key": "loading", "value": "Chargement" },
     { "key": "chest_map_item_description", "value": "Coffre" },
     { "key": "quest_map_item_description", "value": "Inconnu" },
     { "key": "sword_map_item_description", "value": "Combat" },
-    { "key": "rest_map_item_description", "value": "Repos" }
+    { "key": "rest_map_item_description", "value": "Repos" },
+    { "key": "yes", "value": "Oui" },
+    { "key": "no", "value": "Non" },
+    { "key": "cancel", "value": "Annuler" }
   ]
 }

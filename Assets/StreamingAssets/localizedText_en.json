@@ -4,10 +4,16 @@
     { "key": "new_game_menu", "value": "New Game" },
     { "key": "continue_game_menu", "value": "Continue" },
     { "key": "settings_game_menu", "value": "Settings" },
+    { "key": "help_menu", "value": "Help" },
+    { "key": "quit_game_menu", "value": "Quit game" },
+    { "key": "quit_confirm", "value": "Are you sure you want to quit?" },
     { "key": "loading", "value": "Loading" },
     { "key": "chest_map_item_description", "value": "Chest" },
     { "key": "quest_map_item_description", "value": "Unknown" },
     { "key": "sword_map_item_description", "value": "Fight" },
-    { "key": "rest_map_item_description", "value": "Rest" }
+    { "key": "rest_map_item_description", "value": "Rest" },
+    { "key": "yes", "value": "Yes" },
+    { "key": "no", "value": "No" },
+    { "key": "cancel", "value": "Cancel" }
   ]
 }
