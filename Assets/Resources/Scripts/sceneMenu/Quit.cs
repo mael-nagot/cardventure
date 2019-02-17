@@ -11,22 +11,22 @@ public class Quit : MonoBehaviour
     private IEnumerator onQuitGameTapCoroutine()
     {
         playClickSound();
-        StartCoroutine(UIManager.instance.modalPanelChoice("quit_confirm",new string[]{"yes","no"}));
+        StartCoroutine(UIManager.instance.modalPanelChoice("quit_confirm", new string[] { "yes", "no" }));
         yield return new WaitForSeconds(0.1f);
-        while(UIManager.instance.modalPanelAnswer == null)
+        while (UIManager.instance.modalPanelAnswer == null)
         {
             yield return null;
         }
         playClickSound();
         string answer = UIManager.instance.modalPanelAnswer;
-        if(answer == "yes")
+        if (answer == "yes")
         {
             Application.Quit();
         }
     }
     public void onQuitGameLongTapDown()
     {
-        UIManager.instance.showToolTip(this.transform.position,LocalizationManager.instance.GetLocalizedValue("quit_game_menu"));
+        UIManager.instance.showToolTip(this.transform.position, LocalizationManager.instance.GetLocalizedValue("quit_game_menu"));
     }
 
     public void onQuitGameLongTapUp()
@@ -35,7 +35,7 @@ public class Quit : MonoBehaviour
     }
     private void playClickSound()
     {
-        StartCoroutine(SoundController.instance.playSE("click1",1));
+        StartCoroutine(SoundController.instance.playSE("click1", 1));
     }
 
 }

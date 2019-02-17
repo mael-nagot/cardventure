@@ -12,7 +12,7 @@ public class MapItemManagement : MonoBehaviour
 
     public void onLongTapDown()
     {
-         UIManager.instance.showToolTip(this.transform.position,LocalizationManager.instance.GetLocalizedValue(messageKey));
+        UIManager.instance.showToolTip(this.transform.position, LocalizationManager.instance.GetLocalizedValue(messageKey));
     }
 
     public void onLongTapUp()

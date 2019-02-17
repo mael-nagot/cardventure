@@ -27,7 +27,7 @@ public class LocalizationManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         DontDestroyOnLoad(gameObject);
     }
 

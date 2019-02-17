@@ -4,12 +4,13 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class MapItem 
+public class MapItem
 {
     public string key;
     public Map map;
 
-    public MapItem(string keyToSet, Map mapToSet) {
+    public MapItem(string keyToSet, Map mapToSet)
+    {
         key = keyToSet;
         map = mapToSet;
     }
@@ -31,7 +32,7 @@ public class ListOfMaps : ScriptableObject
                 map = mapItem.map;
             }
         }
-        if(map!=null)
+        if (map != null)
         {
             return map;
         }

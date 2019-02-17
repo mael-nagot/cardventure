@@ -11,7 +11,7 @@ public class Settings : MonoBehaviour
 
     public void onSettingsLongTapDown()
     {
-        UIManager.instance.showToolTip(this.transform.position,LocalizationManager.instance.GetLocalizedValue("settings_game_menu"));
+        UIManager.instance.showToolTip(this.transform.position, LocalizationManager.instance.GetLocalizedValue("settings_game_menu"));
     }
 
     public void onSettingsLongTapUp()

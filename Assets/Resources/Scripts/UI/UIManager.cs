@@ -33,8 +33,8 @@ public class UIManager : MonoBehaviour
         tooltip.transform.position = position;
         RectTransform rectTransformCanvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         RectTransform rectTransform = tooltip.GetComponent<RectTransform>();
-        rectTransform.pivot = new Vector2(1,1);
-        if (rectTransform.anchoredPosition.x < -rectTransformCanvas.rect.width/2 + 3/2*rectTransform.rect.width)
+        rectTransform.pivot = new Vector2(1, 1);
+        if (rectTransform.anchoredPosition.x < -rectTransformCanvas.rect.width / 2 + 3 / 2 * rectTransform.rect.width)
         {
             rectTransform.pivot = new Vector2(0, rectTransform.pivot.y);
         }
@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
         {
             rectTransform.pivot = new Vector2(1, rectTransform.pivot.y);
         }
-        if (rectTransform.anchoredPosition.y > rectTransformCanvas.rect.height/2 - rectTransform.rect.height)
+        if (rectTransform.anchoredPosition.y > rectTransformCanvas.rect.height / 2 - rectTransform.rect.height)
         {
             rectTransform.pivot = new Vector2(rectTransform.pivot.x, 1);
         }
@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
             buttonsList[i] = GameObject.Instantiate(Resources.Load("Prefabs/UI/Button"), Vector3.zero, Quaternion.identity, buttonPanel.transform) as GameObject;
             yield return null;
             buttonsList[i].GetComponentInChildren<Text>().text = LocalizationManager.instance.GetLocalizedValue(buttons[i]);
-            int i2=i;
+            int i2 = i;
             buttonsList[i].GetComponent<Button>().onClick.AddListener(() => getChoiceAndClosePanel(buttons[i2]));
         }
     }

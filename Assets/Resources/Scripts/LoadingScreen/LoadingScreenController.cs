@@ -15,7 +15,7 @@ public class LoadingScreenController : MonoBehaviour
 
     void Awake()
     {
-        instance = this;    
+        instance = this;
     }
     public IEnumerator loadScene(string sceneToLoad)
     {
@@ -23,10 +23,10 @@ public class LoadingScreenController : MonoBehaviour
         sceneLoading = SceneManager.LoadSceneAsync(sceneToLoad);
         sceneLoading.allowSceneActivation = false;
 
-        while(sceneLoading.isDone == false)
+        while (sceneLoading.isDone == false)
         {
             slider.value = sceneLoading.progress;
-            if(sceneLoading.progress == 0.9f)
+            if (sceneLoading.progress == 0.9f)
             {
                 slider.value = 1;
                 sceneLoading.allowSceneActivation = true;

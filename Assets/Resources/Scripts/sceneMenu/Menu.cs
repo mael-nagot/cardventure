@@ -4,7 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour {
+public class Menu : MonoBehaviour
+{
 
     public Button buttonQuit;
     public Button buttonNewGame;
@@ -23,29 +24,30 @@ public class Menu : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         // Tween to make the menu items slightly changing color over time
         Sequence menuItemAnimation = DOTween.Sequence();
-        Color menuItemTargetColor = new Color32(79,42,8,220);
+        Color menuItemTargetColor = new Color32(79, 42, 8, 220);
         menuItemAnimation
                 .Append(GameObject.Find("NewGame").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
                 .Join(GameObject.Find("Continue").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
-				.SetLoops(-1, LoopType.Yoyo);
-        
+                .SetLoops(-1, LoopType.Yoyo);
+
         // Tween to make the Particles system displaying the leaves moving right and left so the leaves spread everywhere
         Sequence leaveParticlesSystemAnimation = DOTween.Sequence();
         float xParticleSytem = particleSys.transform.position.x;
         leaveParticlesSystemAnimation
                 .Append(particleSys.transform.DOMoveX(xParticleSytem - 19, 1))
                 .Append(particleSys.transform.DOMoveX(xParticleSytem, 1))
-				.SetLoops(-1);
+                .SetLoops(-1);
         yield return null;
     }
-	
-	void Update () {
-		
-	}
+
+    void Update()
+    {
+
+    }
 
     private void playClickSound()
     {
-        StartCoroutine(SoundController.instance.playSE("click1",1));
+        StartCoroutine(SoundController.instance.playSE("click1", 1));
     }
 
     public IEnumerator onStartNewGameTap()

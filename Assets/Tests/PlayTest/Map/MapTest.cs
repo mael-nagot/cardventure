@@ -11,7 +11,8 @@ namespace Tests
         [UnityTest]
         public IEnumerator TestGetMapFunction()
         {
-            ListOfMaps list = ListOfMaps.Instantiate(Resources.Load("Data/Maps/ListOfMaps")  as ListOfMaps);
+            Debug.Log("This test checks that the GetMap function gets the correct map objet from a string");
+            ListOfMaps list = ListOfMaps.Instantiate(Resources.Load("Data/Maps/ListOfMaps") as ListOfMaps);
             yield return null;
             Assert.AreEqual(list.getMap("Forest").bgmFile, "BgmForest");
         }

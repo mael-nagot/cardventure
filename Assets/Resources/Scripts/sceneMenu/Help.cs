@@ -11,7 +11,7 @@ public class Help : MonoBehaviour
 
     public void onHelpLongTapDown()
     {
-        UIManager.instance.showToolTip(this.transform.position,LocalizationManager.instance.GetLocalizedValue("help_menu"));
+        UIManager.instance.showToolTip(this.transform.position, LocalizationManager.instance.GetLocalizedValue("help_menu"));
     }
 
     public void onHelpLongTapUp()

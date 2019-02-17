@@ -15,7 +15,7 @@ public class MapScene : MonoBehaviour
         loadMapSound(map);
         loadMapBackground(map);
         yield return StartCoroutine(generateMap());
-        shakeObject(1,2);
+        shakeObject(1, 2);
     }
 
     void Update()
@@ -41,19 +41,19 @@ public class MapScene : MonoBehaviour
 
     private void shakeObject(int x, int y)
     {
-        GameObject objectToAnimate = getMapItemFromCoordinates(x,y);
+        GameObject objectToAnimate = getMapItemFromCoordinates(x, y);
         StartCoroutine(objectToAnimate.GetComponent<MapItemManagement>().shakeObject());
     }
 
     private void stopShakingObject(int x, int y)
     {
-        GameObject objectToAnimate = getMapItemFromCoordinates(x,y);
+        GameObject objectToAnimate = getMapItemFromCoordinates(x, y);
         objectToAnimate.GetComponent<MapItemManagement>().stopShakingObject();
     }
 
     private GameObject getMapItemFromCoordinates(int x, int y)
     {
-        return GameObject.Find("mapItem"+x+"-"+y);
+        return GameObject.Find("mapItem" + x + "-" + y);
     }
 
     // To be rewriten, for now it is just to see how it looks
@@ -90,7 +90,7 @@ public class MapScene : MonoBehaviour
                     RectTransform rectTransform = mapItem.GetComponent<RectTransform>();
                     rectTransform.anchoredPosition = new Vector3((-1000f + i * 330f), (300 - j * 300f), 4);
                     rectTransform.pivot = new Vector2(0.5f, 1);
-                    mapItem.transform.localScale = new Vector3(1.2f,1.2f,1.2f);
+                    mapItem.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                     yield return null;
                 }
             }

@@ -13,100 +13,101 @@ namespace Tests
         [UnityTest]
         public IEnumerator TestDataControllerIsInstantiatedInFirstScene()
         {
-			Debug.Log("This test checks that the data controller is instantiated on the very first scene loaded");
+            Debug.Log("This test checks that the data controller is instantiated on the very first scene loaded");
             SceneManager.LoadScene("logo", LoadSceneMode.Single);
             yield return null;
             GameObject dataController = GameObject.FindWithTag("DataController");
-			Assert.IsNotNull(dataController);
+            Assert.IsNotNull(dataController);
         }
 
         [UnityTest]
         public IEnumerator TestLoadDataFileOnAnExistingFile()
         {
-			Debug.Log("This test checks that a test data save file is correctly loaded using the LoadGameData() of the data controller");
-			string testDataPath = "Assets/Tests/TestsData/DataController/data.json";
-			yield return null;
-			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
-			yield return null;
+            Debug.Log("This test checks that a test data save file is correctly loaded using the LoadGameData() of the data controller");
+            string testDataPath = "Assets/Tests/TestsData/DataController/data.json";
+            yield return null;
+            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            yield return null;
 
-			DataController.instance.filePath = testDataPath;
-			DataController.instance.LoadGameData();
-			while(!DataController.instance.GetIsReady())
-			{
-				yield return null;
-			}
-			Assert.AreEqual(DataController.instance.gameData.localizationLanguage,"ja");		
+            DataController.instance.filePath = testDataPath;
+            DataController.instance.LoadGameData();
+            while (!DataController.instance.GetIsReady())
+            {
+                yield return null;
+            }
+            Assert.AreEqual(DataController.instance.gameData.localizationLanguage, "ja");
         }
 
         [UnityTest]
         public IEnumerator TestLoadDataFileOnANonExistingFileCreatesGameDataObject()
         {
-			Debug.Log("This test checks that the LoadGameData() is still creating a gameData object when the loading file has not been created");
-			string dummyPath = "Assets/Tests/TestsData/DataController/dummy.json";
-			yield return null;
-			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
-			yield return null;
+            Debug.Log("This test checks that the LoadGameData() is still creating a gameData object when the loading file has not been created");
+            string dummyPath = "Assets/Tests/TestsData/DataController/dummy.json";
+            yield return null;
+            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            yield return null;
 
-			DataController.instance.filePath = dummyPath;
-			DataController.instance.LoadGameData();
-			while(!DataController.instance.GetIsReady())
-			{
-				yield return null;
-			}
-			Assert.IsNotNull(DataController.instance.gameData);
-			File.Delete(dummyPath);
+            DataController.instance.filePath = dummyPath;
+            DataController.instance.LoadGameData();
+            while (!DataController.instance.GetIsReady())
+            {
+                yield return null;
+            }
+            Assert.IsNotNull(DataController.instance.gameData);
+            File.Delete(dummyPath);
         }
 
         [UnityTest]
         public IEnumerator TestLoadDataFileCreatesSaveFileIfNoneExists()
         {
-			Debug.Log("This test checks that the LoadGameData() creates a save file if there is none existing");
-			string dummyPath = "Assets/Tests/TestsData/DataController/dummy.json";
-			yield return null;
-			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
-			yield return null;
+            Debug.Log("This test checks that the LoadGameData() creates a save file if there is none existing");
+            string dummyPath = "Assets/Tests/TestsData/DataController/dummy.json";
+            yield return null;
+            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            yield return null;
 
-			DataController.instance.filePath = dummyPath;
-			DataController.instance.LoadGameData();
-			while(!DataController.instance.GetIsReady())
-			{
-				yield return null;
-			}
-			Assert.IsTrue(File.Exists(dummyPath));
-			File.Delete(dummyPath);
+            DataController.instance.filePath = dummyPath;
+            DataController.instance.LoadGameData();
+            while (!DataController.instance.GetIsReady())
+            {
+                yield return null;
+            }
+            Assert.IsTrue(File.Exists(dummyPath));
+            File.Delete(dummyPath);
         }
 
         [UnityTest]
         public IEnumerator LoadingAFileAndSavingItDoesNotModifyIt()
         {
-			Debug.Log("This test checks that when loading a save file and saving it directly, the file is not modified (Load and Save are consistant)");
-			string loadDataPath = "Assets/Tests/TestsData/DataController/data.json";
-			string saveDataPath = "Assets/Tests/TestsData/DataController/data2.json";
-			yield return null;
-			GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
-			yield return null;
+            Debug.Log("This test checks that when loading a save file and saving it directly, the file is not modified (Load and Save are consistant)");
+            string loadDataPath = "Assets/Tests/TestsData/DataController/data.json";
+            string saveDataPath = "Assets/Tests/TestsData/DataController/data2.json";
+            yield return null;
+            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            yield return null;
 
-			string loadFileContent = File.ReadAllText(loadDataPath);
-			DataController.instance.filePath = loadDataPath;
-			DataController.instance.LoadGameData();
-			while(!DataController.instance.GetIsReady())
-			{
-				yield return null;
-			}
-			DataController.instance.filePath = saveDataPath;
-			DataController.instance.SaveGameData();
-			yield return null;
-			string saveFileContent = File.ReadAllText(saveDataPath);
-			Assert.AreEqual(saveFileContent,loadFileContent);
-			File.Delete(saveDataPath);
+            string loadFileContent = File.ReadAllText(loadDataPath);
+            DataController.instance.filePath = loadDataPath;
+            DataController.instance.LoadGameData();
+            while (!DataController.instance.GetIsReady())
+            {
+                yield return null;
+            }
+            DataController.instance.filePath = saveDataPath;
+            DataController.instance.SaveGameData();
+            yield return null;
+            string saveFileContent = File.ReadAllText(saveDataPath);
+            Assert.AreEqual(saveFileContent, loadFileContent);
+            File.Delete(saveDataPath);
         }
 
-		[TearDown]
-		public void destroyAllGameObjects()
-		{
-			foreach (GameObject go in Object.FindObjectsOfType<GameObject>()) {
-            	 Object.Destroy(go);
-         	}
-		}
+        [TearDown]
+        public void destroyAllGameObjects()
+        {
+            foreach (GameObject go in Object.FindObjectsOfType<GameObject>())
+            {
+                Object.Destroy(go);
+            }
+        }
     }
 }
