@@ -7,17 +7,13 @@ using UnityEngine.Events;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    [SerializeField]
-    private GameObject tooltip;
-    [SerializeField]
-    private Text modalPanelQuestion;
+    public GameObject tooltip;
+    public Text modalPanelQuestion;
     [SerializeField]
     private Image modalPanelIconImage;
-    [SerializeField]
-    private Button modalPanelGenericButton;
+    public Button modalPanelGenericButton;
     private GameObject[] buttonsList;
-    [SerializeField]
-    private GameObject modalPanelGameObject;
+    public GameObject modalPanelGameObject;
     public string modalPanelAnswer;
 
     void Awake()
@@ -68,6 +64,7 @@ public class UIManager : MonoBehaviour
         {
             buttonsList[i] = GameObject.Instantiate(Resources.Load("Prefabs/UI/Button"), Vector3.zero, Quaternion.identity, buttonPanel.transform) as GameObject;
             yield return null;
+            buttonsList[i].name = "PanelButton" + (i + 1);
             buttonsList[i].GetComponentInChildren<Text>().text = LocalizationManager.instance.GetLocalizedValue(buttons[i]);
             int i2 = i;
             buttonsList[i].GetComponent<Button>().onClick.AddListener(() => getChoiceAndClosePanel(buttons[i2]));

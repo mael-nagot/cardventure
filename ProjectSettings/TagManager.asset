@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LocalizationManager
   - DataController
+  - Button
   layers:
   - Default
   - TransparentFX
