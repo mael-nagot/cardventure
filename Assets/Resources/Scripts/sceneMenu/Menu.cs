@@ -50,12 +50,24 @@ public class Menu : MonoBehaviour
         StartCoroutine(SoundController.instance.playSE("click1", 1));
     }
 
+    /// <summary>
+    /// Called after clicking on the "New Game" button.
+    /// It loads the new game data and load the map scene.
+    /// </summary>
     public IEnumerator onStartNewGameTap()
     {
         playClickSound();
-        DataController.instance.gameData.isGameSessionStarted = true;
-        DataController.instance.gameData.level = 1;
+        initializeGameData();
         particleSys.gameObject.SetActive(false);
         yield return StartCoroutine(LoadingScreenController.instance.loadScene("map"));
+    }
+
+    /// <summary>
+    /// This method initializes the game data
+    /// </summary>
+    private void initializeGameData()
+    {
+        DataController.instance.gameData.isGameSessionStarted = true;
+        DataController.instance.gameData.level = 1;
     }
 }

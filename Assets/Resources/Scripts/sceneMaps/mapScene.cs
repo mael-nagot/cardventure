@@ -23,34 +23,58 @@ public class MapScene : MonoBehaviour
 
     }
 
+    // To be rewritten.
     private string selectMap(int level)
     {
         return "Forest";
     }
 
+    /// <summary>
+    /// This method plays the background music and background sound corresponding to the map.
+    /// </summary>
+    /// <param name="Map map">The map from which the bgm and bgs have to be loaded.</param>
     private void loadMapSound(Map map)
     {
         StartCoroutine(SoundController.instance.playBackgroundMusic(map.bgmFile, 1, 1));
         StartCoroutine(SoundController.instance.playBackgroundSound(map.bgsFile, 1, 1));
     }
 
+    /// <summary>
+    /// This method displays the map background from a prefab
+    /// </summary>
+    /// <param name="Map map">The map from which the background needs to be loaded</param>
     private void loadMapBackground(Map map)
     {
         GameObject.Instantiate(map.mapBackground);
     }
 
+    /// <summary>
+    /// This method makes a map item game object shaking so that the player understands he can interact with it.
+    /// </summary>
+    /// <param name="int x">x of the map item on the map (1-7)</param>
+    /// <param name="int y">y of the map item on the map (1-3)</param>
     private void shakeObject(int x, int y)
     {
         GameObject objectToAnimate = getMapItemFromCoordinates(x, y);
         StartCoroutine(objectToAnimate.GetComponent<MapItemManagement>().shakeObject());
     }
 
+    /// <summary>
+    /// This method make a shaking map item game object stopping to shake
+    /// </summary>
+    /// <param name="int x">x of the map item on the map (1-7)</param>
+    /// <param name="int y">y of the map item on the map (1-3)</param>
     private void stopShakingObject(int x, int y)
     {
         GameObject objectToAnimate = getMapItemFromCoordinates(x, y);
         objectToAnimate.GetComponent<MapItemManagement>().stopShakingObject();
     }
 
+    /// <summary>
+    /// This method gets the map item game object from its position.
+    /// </summary>
+    /// <param name="int x">x of the map item on the map (1-7)</param>
+    /// <param name="int y">y of the map item on the map (1-3)</param>
     private GameObject getMapItemFromCoordinates(int x, int y)
     {
         return GameObject.Find("mapItem" + x + "-" + y);

@@ -21,12 +21,19 @@ public class UIManager : MonoBehaviour
         instance = this;
     }
 
-
+    /// <summary>
+    /// This method display a tooltip.
+    /// Example: UIManager.instance.showToolTip(this.transform.position, LocalizationManager.instance.GetLocalizedValue("quit_game_menu"));
+    /// It will display the tooltip at the position of the object calling the function with the localized text having "quit_game_menu" as a key
+    /// </summary>
+    /// <param name="Vector3 position">The position where to display the tooltip</param>
+    /// <param name="string text">The text to display in the tooltip</param>
     public void showToolTip(Vector3 position, string text)
     {
         tooltip.SetActive(true);
         tooltip.transform.GetChild(0).GetComponent<Text>().text = text;
         tooltip.transform.position = position;
+        // Do position calculation so that the tooltip is not displayed out of the screen
         RectTransform rectTransformCanvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         RectTransform rectTransform = tooltip.GetComponent<RectTransform>();
         rectTransform.pivot = new Vector2(1, 1);
@@ -48,11 +55,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If a tooltip is currently displayed, this method hides it.
+    /// </summary>
     public void hideToolTip()
     {
         tooltip.SetActive(false);
     }
 
+    /// <summary>
+    /// This method open a modal panel having a question (Localized) and one button per answer in parameter
+    /// Example: StartCoroutine(UIManager.instance.modalPanelChoice("quit_confirm", new string[] { "yes", "no" }));
+    /// It will display a modal panel having the key "quit_confirm" localized and having 2 buttons yes and no.
+    /// </summary>
+    /// <param name="string questionKey">The key of the question to localize</param>
+    /// <param name="string[] buttons">An array containing the different buttons to create</param>
     public IEnumerator modalPanelChoice(string questionKey, string[] buttons)
     {
         modalPanelAnswer = null;
@@ -60,6 +77,7 @@ public class UIManager : MonoBehaviour
         openModalPanel();
         GameObject buttonPanel = GameObject.Find("ButtonPanel");
         modalPanelQuestion.text = LocalizationManager.instance.GetLocalizedValue(questionKey);
+        // Create all the modal panel buttons and set listeners to them
         for (int i = 0; i < buttons.Length; i++)
         {
             buttonsList[i] = GameObject.Instantiate(Resources.Load("Prefabs/UI/Button"), Vector3.zero, Quaternion.identity, buttonPanel.transform) as GameObject;
@@ -71,6 +89,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /*
+    This function is called when clicking a button in the modal panel.
+    It set the public variable modalPanelAnswer to the string of the button pressed so that it can be accessed by another class.
+     */
     private void getChoiceAndClosePanel(string button)
     {
         modalPanelAnswer = button;

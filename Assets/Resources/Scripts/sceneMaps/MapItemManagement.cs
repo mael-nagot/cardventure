@@ -24,6 +24,9 @@ public class MapItemManagement : MonoBehaviour
         Debug.Log("Simple tap detected on object: " + this.name);
     }
 
+    /// <summary>
+    /// This method makes a map item game object shaking so that the player understands he can interact with it.
+    /// </summary>
     public IEnumerator shakeObject()
     {
         GameObject childObjectToShake = this.transform.GetChild(0).gameObject;
@@ -36,6 +39,9 @@ public class MapItemManagement : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// This method make a shaking map item game object stopping to shake
+    /// </summary>
     public void stopShakingObject()
     {
         shakeObjectSequence.Kill();

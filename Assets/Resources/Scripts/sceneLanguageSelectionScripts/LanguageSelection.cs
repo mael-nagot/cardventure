@@ -36,7 +36,9 @@ public class LanguageSelection : MonoBehaviour
         StartCoroutine(fadeOutFlagsAndLoadScene());
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// This method make the flag fade out before loading the menu.
+    /// </summary>  
     IEnumerator fadeOutFlagsAndLoadScene()
     {
         while (!LocalizationManager.instance.GetIsReady())
@@ -53,7 +55,9 @@ public class LanguageSelection : MonoBehaviour
         yield return StartCoroutine(LoadingScreenController.instance.loadScene("menu"));
     }
 
-    //Loading Localization and saving the language choice in the game data json file
+    /// <summary>
+    /// Loading Localization and saving the language choice in the game data json file
+    /// </summary>  
     private void loadLocalization(string language)
     {
         LocalizationManager.instance.LoadLocalizedText("localizedText_" + language + ".json");

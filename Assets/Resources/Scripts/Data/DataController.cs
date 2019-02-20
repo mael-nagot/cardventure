@@ -31,9 +31,9 @@ public class DataController : MonoBehaviour
         LoadGameData();
     }
 
-    /*
-    Load the game data from the save file. If no save file exists, then it creates one.
-     */
+    /// <summary>
+    /// Load the game data from the save file. If no save file exists, then it creates one.
+    /// </summary>
     public void LoadGameData()
     {
         /* 
@@ -54,6 +54,9 @@ public class DataController : MonoBehaviour
         isReady = true;
     }
 
+    /// <summary>
+    /// Save the game data.
+    /// </summary>
     public void SaveGameData()
     {
         string dataAsJson = JsonUtility.ToJson(gameData);
@@ -61,12 +64,18 @@ public class DataController : MonoBehaviour
         File.WriteAllText(filePath, dataAsJson);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Return true when the save file is fully loaded.
+    /// This function is done to avoid trying to access data when they are not fully loaded.
+    /// </summary>
     public bool GetIsReady()
     {
         return isReady;
     }
 
+    /// <summary>
+    /// Return true when a game is ongoing so that the main menu can allow to continue the game.
+    /// </summary>
     public bool isGameSessionStarted()
     {
         return gameData.isGameSessionStarted;

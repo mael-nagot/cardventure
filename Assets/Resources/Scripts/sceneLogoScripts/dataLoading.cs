@@ -47,6 +47,10 @@ public class DataLoading : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If a save file exists and a language has been set, wait for the localization to be loaded to load the menu
+    /// otherwise, load the language selection scene.
+    /// </summary>
     void LoadNextScene()
     {
         /* 
@@ -63,7 +67,9 @@ public class DataLoading : MonoBehaviour
         }
     }
 
-    // Wait for the localization to be loaded before loading the manu scene
+    /// <summary>
+    /// Wait for the localization to be loaded before loading the menu scene
+    /// </summary>    
     private IEnumerator checkLocalizationReadyAndLoadMenuScene()
     {
         while (!LocalizationManager.instance.GetIsReady())

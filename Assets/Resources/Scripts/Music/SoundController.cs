@@ -52,13 +52,13 @@ public class SoundController : MonoBehaviour
                 BGM CONTROL
     ------------------------------------------- */
 
-    /*
-    Ensure smooth transition when changing background music
-    transitionTime in seconds
-    volume value between 0 and 1
-    Usage:
-    StartCoroutine(SoundController.instance.playBackgroundMusic("BgmDungeon", 0.5f, 2));
-     */
+    /// <summary>
+    /// Load a background music and ensure smooth transition with previous bgm played
+    /// Example: StartCoroutine(SoundController.instance.playBackgroundMusic("BgmDungeon", 0.5f, 2));
+    /// </summary>
+    /// <param name="string musicFile">The name of the music file to load (must be in the Audio/BGM/ folder)</param>
+    /// <param name="float volume">The volume of the music to be loaded (between 0 and 1)</param>
+    /// <param name="float transitionTime">The time in seconds when the previous bgm fade out and the current music fade in</param>
     public IEnumerator playBackgroundMusic(string musicFile, float volume, float transitionTime)
     {
         if (musicFile != getCurrentBGMClip())
@@ -100,11 +100,11 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    /*
-    transitionTime in seconds
-    Usage:
-    StartCoroutine(SoundController.instance.stopBackgroundMusic(2));
-     */
+    /// <summary>
+    /// Stop a background music
+    /// Example: StartCoroutine(SoundController.instance.stopBackgroundMusic(2));
+    /// </summary>
+    /// <param name="float transitionTime">The time in seconds for the background music to fade out</param>
     public IEnumerator stopBackgroundMusic(float transitionTime)
     {
         BGMOff.TransitionTo(transitionTime);
@@ -119,7 +119,9 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    // Return the BGM clip actually playing as a String
+    /// <summary>
+    /// This method returns the BGM clip actually playing as a String
+    /// </summary>
     public string getCurrentBGMClip()
     {
         string clipName = null;
@@ -140,6 +142,9 @@ public class SoundController : MonoBehaviour
         return clipName;
     }
 
+    /// <summary>
+    /// This method returns the volume of the background music currently played
+    /// </summary>
     public float getCurrentBGMAudioSourceVolume()
     {
         float volume = 0;
@@ -160,11 +165,11 @@ public class SoundController : MonoBehaviour
         return volume;
     }
 
-    /*
-    set the volume of the Audio Source (Not in the AudioMixer !!).
-    volume value between 0 and 1
-    transitionTime in seconds
-     */
+    /// <summary>
+    /// set the volume of the Audio Source (Not in the AudioMixer !!).
+    /// </summary>
+    /// <param name="float volume">The new value of the music volume (between 0 and 1)</param>
+    /// <param name="float transitionTime">The time in seconds to fade the music to the new volume value</param>
     public IEnumerator setBGMVolumeTo(float volume, float transitionTime)
     {
         float initVolume = getCurrentBGMAudioSourceVolume();
@@ -199,13 +204,13 @@ public class SoundController : MonoBehaviour
                 BGS CONTROL
     ------------------------------------------- */
 
-    /*
-    Ensure smooth transition when changing background sound
-    transitionTime in seconds
-    volume value between 0 and 1
-    Usage:
-    StartCoroutine(SoundController.instance.playBackgroundSound("BgsDungeon", 0.5f, 2));
-     */
+    /// <summary>
+    /// Load a background sound and ensure smooth transition with previous bgs played
+    /// Example: StartCoroutine(SoundController.instance.playBackgroundSound("BgsDungeon", 0.5f, 2));
+    /// </summary>
+    /// <param name="string soundFile">The name of the sound file to load (must be in the Audio/BGS/ folder)</param>
+    /// <param name="float volume">The volume of the sound to be loaded (between 0 and 1)</param>
+    /// <param name="float transitionTime">The time in seconds when the previous bgm fade out and the current sound fade in</param>
     public IEnumerator playBackgroundSound(string soundFile, float volume, float transitionTime)
     {
         if (soundFile != getCurrentBGSClip())
@@ -247,11 +252,11 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    /*
-    transitionTime in seconds
-    Usage:
-    StartCoroutine(SoundController.instance.stopBackgroundSound(2));
-     */
+    /// <summary>
+    /// Stop a background sound
+    /// Example: StartCoroutine(SoundController.instance.stopBackgroundSound(2));
+    /// </summary>
+    /// <param name="float transitionTime">The time in seconds for the background sound to fade out</param>
     public IEnumerator stopBackgroundSound(float transitionTime)
     {
         BGSOff.TransitionTo(transitionTime);
@@ -266,7 +271,9 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    // Return the BGS clip actually playing as a String
+    /// <summary>
+    /// This method returns the BGS clip actually playing as a String
+    /// </summary>
     public string getCurrentBGSClip()
     {
         string clipName = null;
@@ -287,6 +294,9 @@ public class SoundController : MonoBehaviour
         return clipName;
     }
 
+    /// <summary>
+    /// This method returns the volume of the background sound currently played
+    /// </summary>
     public float getCurrentBGSAudioSourceVolume()
     {
         float volume = 0;
@@ -307,11 +317,11 @@ public class SoundController : MonoBehaviour
         return volume;
     }
 
-    /*
-    set the volume of the Audio Source (Not in the AudioMixer !!).
-    volume value between 0 and 1
-    transitionTime in seconds
-     */
+    /// <summary>
+    /// set the volume of the Audio Source (Not in the AudioMixer !!).
+    /// </summary>
+    /// <param name="float volume">The new value of the sound volume (between 0 and 1)</param>
+    /// <param name="float transitionTime">The time in seconds to fade the sound to the new volume value</param>
     public IEnumerator setBGSVolumeTo(float volume, float transitionTime)
     {
         float initVolume = getCurrentBGSAudioSourceVolume();
@@ -340,9 +350,11 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    /*
-    This function is used to play a Sound Effect
-     */
+    /// <summary>
+    /// This method plays a sound effect.
+    /// </summary>
+    /// <param name="string soundFile">The name of the sound file to be played (must be in the Audio/SE/ folder)</param>
+    /// <param name="float volume">The volume of the sound to be played (between 0 and 1)</param>
     public IEnumerator playSE(string soundFile, float volume)
     {
         string sePath = "Audio/SE/" + soundFile;

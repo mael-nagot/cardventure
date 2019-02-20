@@ -31,6 +31,11 @@ public class LocalizationManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    /// <summary>
+    /// Load a localization text file and create a dictionary used by the UIManager instance to get localized strings
+    /// Exemple: LocalizationManager.instance.LoadLocalizedText("localizedText_en.json");
+    /// </summary>
+    /// <param name="string fileName">The name of the file to localize (located in the StreamingAssets folder</param>
     public void LoadLocalizedText(string fileName)
     {
         localizedText = new Dictionary<string, string>();
@@ -66,6 +71,10 @@ public class LocalizationManager : MonoBehaviour
         isReady = true;
     }
 
+    /// <summary>
+    /// Return a localized string from a key
+    /// </summary>
+    /// <param name="string key">The localization key that is used in the localization files</param>
     public string GetLocalizedValue(string key)
     {
         string result = missingTextString;
@@ -78,6 +87,10 @@ public class LocalizationManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Return trye when the localization is loaded and ready to be used
+    /// This is used to avoid calling localization when it is not fully loaded
+    /// </summary>
     public bool GetIsReady()
     {
         return isReady;

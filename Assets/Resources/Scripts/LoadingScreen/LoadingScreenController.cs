@@ -11,12 +11,17 @@ public class LoadingScreenController : MonoBehaviour
     public Slider slider;
 
     AsyncOperation sceneLoading;
-    // Start is called before the first frame update
 
     void Awake()
     {
         instance = this;
     }
+
+    /// <summary>
+    /// This method display the loading screen and then loads the scene in parameter asynchronously.
+    /// It is retrieving the loading progress and updating the load bar accordingly
+    /// </summary>
+    /// <param name="string sceneToLoad">The name of the scene to be loaded</param>
     public IEnumerator loadScene(string sceneToLoad)
     {
         loadingScreen.SetActive(true);

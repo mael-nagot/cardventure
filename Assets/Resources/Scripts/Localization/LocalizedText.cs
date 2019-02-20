@@ -8,7 +8,8 @@ public class LocalizedText : MonoBehaviour
 
     public string key;
 
-    // Use this for initialization
+    // This script is to be atteched to an object having localized text.
+    // The key has to be set in the editor and the text will be automatically localized
     void Start()
     {
         Text text = GetComponent<Text>();
