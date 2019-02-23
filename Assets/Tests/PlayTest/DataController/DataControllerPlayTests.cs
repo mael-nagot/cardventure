@@ -14,7 +14,7 @@ namespace Tests
         public IEnumerator TestDataControllerIsInstantiatedInFirstScene()
         {
             Debug.Log("This test checks that the data controller is instantiated on the very first scene loaded");
-            SceneManager.LoadScene("logo", LoadSceneMode.Single);
+            SceneManager.LoadScene("logo", LoadSceneMode.Additive);
             yield return null;
             GameObject dataController = GameObject.FindWithTag("DataController");
             Assert.IsNotNull(dataController);
@@ -25,8 +25,7 @@ namespace Tests
         {
             Debug.Log("This test checks that a test data save file is correctly loaded using the LoadGameData() of the data controller");
             string testDataPath = "Assets/Tests/TestsData/DataController/data.json";
-            yield return null;
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            GameObject.Instantiate(TestController.instance.dataController as GameObject);
             yield return null;
 
             DataController.instance.filePath = testDataPath;
@@ -43,8 +42,7 @@ namespace Tests
         {
             Debug.Log("This test checks that the LoadGameData() is still creating a gameData object when the loading file has not been created");
             string dummyPath = "Assets/Tests/TestsData/DataController/dummy.json";
-            yield return null;
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            GameObject.Instantiate(TestController.instance.dataController as GameObject);
             yield return null;
 
             DataController.instance.filePath = dummyPath;
@@ -62,8 +60,7 @@ namespace Tests
         {
             Debug.Log("This test checks that the LoadGameData() creates a save file if there is none existing");
             string dummyPath = "Assets/Tests/TestsData/DataController/dummy.json";
-            yield return null;
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            GameObject.Instantiate(TestController.instance.dataController as GameObject);
             yield return null;
 
             DataController.instance.filePath = dummyPath;
@@ -82,8 +79,7 @@ namespace Tests
             Debug.Log("This test checks that when loading a save file and saving it directly, the file is not modified (Load and Save are consistant)");
             string loadDataPath = "Assets/Tests/TestsData/DataController/data.json";
             string saveDataPath = "Assets/Tests/TestsData/DataController/data2.json";
-            yield return null;
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/DataController") as GameObject);
+            GameObject.Instantiate(TestController.instance.dataController as GameObject);
             yield return null;
 
             string loadFileContent = File.ReadAllText(loadDataPath);
@@ -99,6 +95,18 @@ namespace Tests
             string saveFileContent = File.ReadAllText(saveDataPath);
             Assert.AreEqual(saveFileContent, loadFileContent);
             File.Delete(saveDataPath);
+        }
+
+        [SetUp]
+        public void loadTestScene()
+        {
+            SceneManager.LoadScene("testScene", LoadSceneMode.Single);
+        }
+
+        [TearDown]
+        public void unloadTestScene()
+        {
+            SceneManager.UnloadSceneAsync("testScene");
         }
 
         [TearDown]

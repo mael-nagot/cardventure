@@ -22,10 +22,18 @@ public class LoadingScreenController : MonoBehaviour
     /// It is retrieving the loading progress and updating the load bar accordingly
     /// </summary>
     /// <param name="string sceneToLoad">The name of the scene to be loaded</param>
-    public IEnumerator loadScene(string sceneToLoad)
+    /// <param name="bool additive">Is it loaded on addition to current loaded scene or does it replace it?</param>
+    public IEnumerator loadScene(string sceneToLoad, bool additive = false)
     {
         loadingScreen.SetActive(true);
-        sceneLoading = SceneManager.LoadSceneAsync(sceneToLoad);
+        if (additive)
+        {
+            sceneLoading = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
+        }
+        else
+        {
+            sceneLoading = SceneManager.LoadSceneAsync(sceneToLoad);
+        }
         sceneLoading.allowSceneActivation = false;
 
         while (sceneLoading.isDone == false)

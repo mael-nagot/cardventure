@@ -12,14 +12,26 @@ namespace Tests
         [UnityTest]
         public IEnumerator TestSceneIsLoadedWhileLoadingScreenIsDone()
         {
-            yield return loadLocalization();
             Debug.Log("This test checks that when loading a scene using the loading screen function, the scene is active at the end");
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/LoadingScreenController") as GameObject);
             yield return null;
-            yield return LoadingScreenController.instance.loadScene("logo");
-            Assert.AreEqual(SceneManager.GetActiveScene().name, "logo");
+            yield return loadLocalization();
+            GameObject.Instantiate(TestController.instance.loadingScreenController as GameObject);
+            yield return null;
+            yield return LoadingScreenController.instance.loadScene("logo", true);
+            Assert.IsNotNull(GameObject.Find("Logo"));
         }
 
+        [SetUp]
+        public void loadTestScene()
+        {
+            SceneManager.LoadScene("testScene", LoadSceneMode.Single);
+        }
+
+        [TearDown]
+        public void unloadTestScene()
+        {
+            SceneManager.UnloadSceneAsync("testScene");
+        }
 
         [TearDown]
         public void destroyAllGameObjects()
@@ -32,7 +44,7 @@ namespace Tests
 
         public IEnumerator loadLocalization()
         {
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/LocalizationManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.localizationManager as GameObject);
             yield return null;
             LocalizationManager.instance.LoadLocalizedText("localizedText_en.json");
 

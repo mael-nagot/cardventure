@@ -80,7 +80,7 @@ public class UIManager : MonoBehaviour
         // Create all the modal panel buttons and set listeners to them
         for (int i = 0; i < buttons.Length; i++)
         {
-            buttonsList[i] = GameObject.Instantiate(Resources.Load("Prefabs/UI/Button"), Vector3.zero, Quaternion.identity, buttonPanel.transform) as GameObject;
+            buttonsList[i] = GameObject.Instantiate(modalPanelGenericButton.gameObject, Vector3.zero, Quaternion.identity, buttonPanel.transform) as GameObject;
             yield return null;
             buttonsList[i].name = "PanelButton" + (i + 1);
             buttonsList[i].GetComponentInChildren<Text>().text = LocalizationManager.instance.GetLocalizedValue(buttons[i]);

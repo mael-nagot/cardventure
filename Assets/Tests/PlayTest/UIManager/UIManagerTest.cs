@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.TestTools;
+using UnityEngine.SceneManagement;
 
 namespace Tests
 {
@@ -15,9 +16,9 @@ namespace Tests
             Debug.Log("This test checks that the ShowToolTip function activates the tooltip");
             GameObject canvasObject = createCanvas();
 
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/UIManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.uiManager as GameObject);
             yield return null;
-            GameObject tooltip = GameObject.Instantiate(Resources.Load("Prefabs/UI/Tooltip"), Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
+            GameObject tooltip = GameObject.Instantiate(TestController.instance.tooltip, Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
             yield return null;
             UIManager.instance.tooltip = tooltip;
             UIManager.instance.showToolTip(Vector3.zero, "Bananas");
@@ -30,9 +31,9 @@ namespace Tests
             Debug.Log("This test checks that the ShowToolTip function display the tooltip with the expected text");
             GameObject canvasObject = createCanvas();
 
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/UIManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.uiManager as GameObject);
             yield return null;
-            GameObject tooltip = GameObject.Instantiate(Resources.Load("Prefabs/UI/Tooltip"), Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
+            GameObject tooltip = GameObject.Instantiate(TestController.instance.tooltip, Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
             yield return null;
             UIManager.instance.tooltip = tooltip;
             UIManager.instance.showToolTip(Vector3.zero, "Bananas");
@@ -45,9 +46,9 @@ namespace Tests
             Debug.Log("This test checks that the HideToolTip function deactivates the tooltip");
             GameObject canvasObject = createCanvas();
 
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/UIManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.uiManager as GameObject);
             yield return null;
-            GameObject tooltip = GameObject.Instantiate(Resources.Load("Prefabs/UI/Tooltip"), Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
+            GameObject tooltip = GameObject.Instantiate(TestController.instance.tooltip, Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
             yield return null;
             UIManager.instance.tooltip = tooltip;
             UIManager.instance.showToolTip(Vector3.zero, "Bananas");
@@ -119,6 +120,18 @@ namespace Tests
             Assert.AreEqual(GameObject.FindGameObjectsWithTag("Button").Length - 1, 0);
         }
 
+        [SetUp]
+        public void loadTestScene()
+        {
+            SceneManager.LoadScene("testScene", LoadSceneMode.Single);
+        }
+
+        [TearDown]
+        public void unLoadTestScene()
+        {
+            SceneManager.UnloadSceneAsync("testScene");
+        }
+
         [TearDown]
         public void destroyAllGameObjects()
         {
@@ -139,7 +152,7 @@ namespace Tests
 
         private IEnumerator makeLocalizationReady()
         {
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/LocalizationManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.localizationManager as GameObject);
             yield return null;
             LocalizationManager.instance.LoadLocalizedText("localizedText_en.json");
 
@@ -153,15 +166,16 @@ namespace Tests
         {
             GameObject canvasObject = createCanvas();
 
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/UIManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.uiManager as GameObject);
             yield return null;
-            GameObject modalPanel = GameObject.Instantiate(Resources.Load("Prefabs/UI/ModalPanel"), Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
+            GameObject modalPanel = GameObject.Instantiate(TestController.instance.modalPanel, Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
             yield return null;
-            GameObject button = GameObject.Instantiate(Resources.Load("Prefabs/UI/Button"), Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
+            GameObject button = GameObject.Instantiate(TestController.instance.genericButton, Vector3.zero, Quaternion.identity, canvasObject.transform) as GameObject;
             yield return null;
             UIManager.instance.modalPanelGenericButton = button.GetComponent<Button>();
             UIManager.instance.modalPanelGameObject = modalPanel;
             UIManager.instance.modalPanelQuestion = GameObject.Find("Text").GetComponent<Text>();
         }
+
     }
 }

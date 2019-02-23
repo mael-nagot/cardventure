@@ -9,8 +9,8 @@ public class Map : ScriptableObject
     public GameObject eventBackground;
     public GameObject battleBackground;
 
-    public string bgmFile;
-    public string bgsFile;
+    public AudioClip bgmFile;
+    public AudioClip bgsFile;
     public int level;
     public int[] possibleTiles;
     public int[] possibleTroopsEncountered;

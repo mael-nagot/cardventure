@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.SceneManagement;
 
 namespace Tests
 {
@@ -12,9 +13,21 @@ namespace Tests
         public IEnumerator TestGetMapFunction()
         {
             Debug.Log("This test checks that the GetMap function gets the correct map objet from a string");
-            ListOfMaps list = ListOfMaps.Instantiate(Resources.Load("Data/Maps/ListOfMaps") as ListOfMaps);
+            SceneManager.LoadScene("testScene", LoadSceneMode.Single);
             yield return null;
-            Assert.AreEqual(list.getMap("Forest").bgmFile, "BgmForest");
+            ListOfMaps list = TestController.instance.listOfMaps;
+            Assert.AreEqual(list.getMap("Forest").bgmFile.name, "BgmForest");
+            yield return SceneManager.UnloadSceneAsync("testScene");
+
+        }
+
+        [TearDown]
+        public void destroyAllGameObjects()
+        {
+            foreach (GameObject go in Object.FindObjectsOfType<GameObject>())
+            {
+                Object.Destroy(go);
+            }
         }
 
     }

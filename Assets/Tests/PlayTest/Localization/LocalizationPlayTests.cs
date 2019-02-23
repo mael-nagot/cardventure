@@ -13,11 +13,10 @@ namespace Tests
         public IEnumerator TestLocalizationManagerIsInstantiatedInFirstScene()
         {
             Debug.Log("This test checks that the Localization Manager is instantiated from the very first scene.");
-            SceneManager.LoadScene("logo", LoadSceneMode.Single);
+            SceneManager.LoadScene("logo", LoadSceneMode.Additive);
             yield return null;
             GameObject localizationManager = GameObject.FindWithTag("LocalizationManager");
             Assert.IsNotNull(localizationManager);
-            destroyAllGameObjects();
         }
 
         [UnityTest]
@@ -27,7 +26,7 @@ namespace Tests
         {
             Debug.Log("This test checks that the LoadLocalizedText actually loads the right localization file and that the GetLocalizedValue retrieve the expected localization value from a key.");
             yield return null;
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/LocalizationManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.localizationManager as GameObject);
             yield return null;
             LocalizationManager.instance.LoadLocalizedText(file);
 
@@ -36,7 +35,6 @@ namespace Tests
                 yield return null;
             }
             Assert.AreEqual(LocalizationManager.instance.GetLocalizedValue(key), value);
-            destroyAllGameObjects();
         }
 
         [UnityTest]
@@ -46,7 +44,7 @@ namespace Tests
         {
             Debug.Log("This test checks that a text object instantiated with the LocalizedText script and a key is automatically localized.");
             yield return null;
-            GameObject.Instantiate(Resources.Load("Prefabs/Controllers/LocalizationManager") as GameObject);
+            GameObject.Instantiate(TestController.instance.localizationManager as GameObject);
             yield return new WaitForSeconds(1);
             LocalizationManager.instance.LoadLocalizedText(file);
 
@@ -61,9 +59,21 @@ namespace Tests
             textGameObject.GetComponent<LocalizedText>().key = key;
             yield return null;
             Assert.AreEqual(textGameObject.GetComponent<Text>().text, value);
-            destroyAllGameObjects();
         }
 
+        [SetUp]
+        public void loadTestScene()
+        {
+            SceneManager.LoadScene("testScene", LoadSceneMode.Single);
+        }
+
+        [TearDown]
+        public void unLoadTestScene()
+        {
+            SceneManager.UnloadSceneAsync("testScene");
+        }
+
+        [TearDown]
         public void destroyAllGameObjects()
         {
             foreach (GameObject go in Object.FindObjectsOfType<GameObject>())

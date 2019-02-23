@@ -47,7 +47,7 @@ public class Menu : MonoBehaviour
 
     private void playClickSound()
     {
-        StartCoroutine(SoundController.instance.playSE("click1", 1));
+        StartCoroutine(SoundController.instance.playSE(SoundContainerMenu.instance.clickSound, 1));
     }
 
     /// <summary>

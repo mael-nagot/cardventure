@@ -16,8 +16,8 @@ MonoBehaviour:
     type: 3}
   eventBackground: {fileID: 0}
   battleBackground: {fileID: 0}
-  bgmFile: BgmForest
-  bgsFile: BgsForest
+  bgmFile: {fileID: 8300000, guid: 132e792778883c34dba63300d2d8b206, type: 3}
+  bgsFile: {fileID: 8300000, guid: f872fbeed870c452f990f9f27884a45a, type: 3}
   level: 1
   possibleTiles: 
   possibleTroopsEncountered: 

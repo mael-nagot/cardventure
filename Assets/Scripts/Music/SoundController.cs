@@ -56,18 +56,13 @@ public class SoundController : MonoBehaviour
     /// Load a background music and ensure smooth transition with previous bgm played
     /// Example: StartCoroutine(SoundController.instance.playBackgroundMusic("BgmDungeon", 0.5f, 2));
     /// </summary>
-    /// <param name="string musicFile">The name of the music file to load (must be in the Audio/BGM/ folder)</param>
+    /// <param name="AudioClip musicToLoad">The AudioClip to load</param>
     /// <param name="float volume">The volume of the music to be loaded (between 0 and 1)</param>
     /// <param name="float transitionTime">The time in seconds when the previous bgm fade out and the current music fade in</param>
-    public IEnumerator playBackgroundMusic(string musicFile, float volume, float transitionTime)
+    public IEnumerator playBackgroundMusic(AudioClip musicToLoad, float volume, float transitionTime)
     {
-        if (musicFile != getCurrentBGMClip())
+        if (musicToLoad.name != getCurrentBGMClip())
         {
-            // Creating AudioClip from the musicFile path
-            string bgmPath = "Audio/BGM/" + musicFile;
-            AudioClip musicToLoad = Resources.Load<AudioClip>(bgmPath);
-            yield return null;
-
             /*
             If the first BGM is currently playing set the second BGM and transition between both
             Otherwise do the opposite
@@ -208,18 +203,13 @@ public class SoundController : MonoBehaviour
     /// Load a background sound and ensure smooth transition with previous bgs played
     /// Example: StartCoroutine(SoundController.instance.playBackgroundSound("BgsDungeon", 0.5f, 2));
     /// </summary>
-    /// <param name="string soundFile">The name of the sound file to load (must be in the Audio/BGS/ folder)</param>
+    /// <param name="AudioClip soundToLoad">The AudioClip to load</param>
     /// <param name="float volume">The volume of the sound to be loaded (between 0 and 1)</param>
     /// <param name="float transitionTime">The time in seconds when the previous bgm fade out and the current sound fade in</param>
-    public IEnumerator playBackgroundSound(string soundFile, float volume, float transitionTime)
+    public IEnumerator playBackgroundSound(AudioClip soundToLoad, float volume, float transitionTime)
     {
-        if (soundFile != getCurrentBGSClip())
+        if (soundToLoad.name != getCurrentBGSClip())
         {
-            // Creating AudioClip from the soundFile path
-            string bgsPath = "Audio/BGS/" + soundFile;
-            AudioClip soundToLoad = Resources.Load<AudioClip>(bgsPath);
-            yield return null;
-
             /*
             If the first BGS is currently playing set the second BGS and transition between both
             Otherwise do the opposite
@@ -355,11 +345,8 @@ public class SoundController : MonoBehaviour
     /// </summary>
     /// <param name="string soundFile">The name of the sound file to be played (must be in the Audio/SE/ folder)</param>
     /// <param name="float volume">The volume of the sound to be played (between 0 and 1)</param>
-    public IEnumerator playSE(string soundFile, float volume)
+    public IEnumerator playSE(AudioClip soundToPlay, float volume)
     {
-        string sePath = "Audio/SE/" + soundFile;
-        AudioClip soundToPlay = Resources.Load<AudioClip>(sePath);
-        yield return null;
         switch (SEPointer)
         {
             case 1:
@@ -383,5 +370,6 @@ public class SoundController : MonoBehaviour
                 SEPointer = 2;
                 break;
         }
+        yield return null;
     }
 }
