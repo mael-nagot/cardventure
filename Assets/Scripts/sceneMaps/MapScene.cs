@@ -11,6 +11,7 @@ public class MapScene : MonoBehaviour
     private int[,] mapTilesId;
     [SerializeField]
     private GameObject linePrefab;
+    private List<MapItemLink> mapItemLinks = new List<MapItemLink>();
 
     IEnumerator Start()
     {
@@ -20,10 +21,9 @@ public class MapScene : MonoBehaviour
         loadMapBackground(map);
         generateMap();
         yield return StartCoroutine(displayMap());
-        for (int i = 0; i < map.sizeY; i++)
-        {
-            drawLineBetweenObjects(1, 1, 2, i + 1);
-        }
+        generateMapItemLinks();
+        displayMapItemLinks();
+
         shakeObject(1, 1);
     }
 
@@ -97,7 +97,6 @@ public class MapScene : MonoBehaviour
         mapTilesId = new int[map.sizeX, map.sizeY];
         initializeMapWithDefaultTile(defaultTile);
         AddOtherTilesToMap(listOfTiles, defaultTile);
-        debugMapTilesId();
     }
 
     private void initializeMapWithDefaultTile(int defaultTile)
@@ -165,29 +164,6 @@ public class MapScene : MonoBehaviour
             }
         }
         return false;
-    }
-
-    // For debugging purpose, to be removed
-    void debugMapTilesId()
-    {
-        string toDebug = "";
-        for (int i = 0; i < mapTilesId.GetLength(0); i++)
-        {
-            toDebug += "[";
-            for (int j = 0; j < mapTilesId.GetLength(1); j++)
-            {
-                if (j == mapTilesId.GetLength(1) - 1)
-                {
-                    toDebug += mapTilesId[i, j];
-                }
-                else
-                {
-                    toDebug += mapTilesId[i, j] + ",";
-                }
-            }
-            toDebug += "]";
-        }
-        Debug.Log(toDebug);
     }
 
     private int getDefaultTileIndex(Tile[] listofTiles)
@@ -292,7 +268,15 @@ public class MapScene : MonoBehaviour
         Vector3 differenceVector = pointB - pointA;
 
         // Setting the image arrow to the right position and right size
-        int lineHeight = 10;
+        int lineHeight;
+        if (map.sizeX <= 7 && map.sizeY <= 3)
+        {
+            lineHeight = 10;
+        }
+        else
+        {
+            lineHeight = 7;
+        }
         imageRectTransform.sizeDelta = new Vector2(differenceVector.magnitude / canvasObject.GetComponent<Canvas>().scaleFactor, lineHeight);
         imageRectTransform.pivot = new Vector2(0, 0.5f);
         imageRectTransform.position = pointA;
@@ -304,6 +288,70 @@ public class MapScene : MonoBehaviour
         // Restoring the Pivot to the previous Position so that the tooltip is correctly displayed
         object2RectTransform.SetPivot(new Vector2(0.5f, 1));
         object1RectTransform.SetPivot(new Vector2(0.5f, 1));
+    }
+
+    private void generateMapItemLinks()
+    {
+        // Add links starting from the Map Item on the left
+        for (int i = 0; i < map.sizeY; i++)
+        {
+            mapItemLinks.Add(new MapItemLink(1, 1, 2, i + 1));
+        }
+
+        // Add straight map item links
+        for (int i = 2; i < map.sizeX - 1; i++)
+        {
+            for (int j = 1; j < map.sizeY + 1; j++)
+            {
+                mapItemLinks.Add(new MapItemLink(i, j, i + 1, j));
+            }
+        }
+
+        // Add links coverging to the tile on the left
+        for (int i = 0; i < map.sizeY; i++)
+        {
+            mapItemLinks.Add(new MapItemLink(map.sizeX - 1, i + 1, map.sizeX, 1));
+        }
+
+        // Add links randomly based on the map tilesConnectionRatio
+        for (int i = 2; i < map.sizeX - 1; i++)
+        {
+            for (int j = 1; j < map.sizeY + 1; j++)
+            {
+                if (j != map.sizeY && UnityEngine.Random.Range(0, 100) < map.tilesConnectionRatio)
+                {
+                    mapItemLinks.Add(new MapItemLink(i, j, i + 1, j + 1));
+                }
+                if (j != 1 && UnityEngine.Random.Range(0, 100) < map.tilesConnectionRatio)
+                {
+                    if (map.allowTileConnectionCrossingEachOther || !areMapItemConnected(i, j - 1, i + 1, j))
+                    {
+                        mapItemLinks.Add(new MapItemLink(i, j, i + 1, j - 1));
+                    }
+                }
+            }
+        }
+    }
+
+    private void displayMapItemLinks()
+    {
+        for (int i = 0; i < mapItemLinks.Count; i++)
+        {
+            drawLineBetweenObjects(mapItemLinks[i].origin[0], mapItemLinks[i].origin[1], mapItemLinks[i].destination[0], mapItemLinks[i].destination[1]);
+        }
+    }
+
+    private bool areMapItemConnected(int tile1X, int tile1Y, int tile2X, int tile2Y)
+    {
+        MapItemLink tileToCheck = new MapItemLink(tile1X, tile1Y, tile2X, tile2Y);
+        for (int i = 0; i < mapItemLinks.Count; i++)
+        {
+            if (tileToCheck.origin[0] == mapItemLinks[i].origin[0] && tileToCheck.origin[1] == mapItemLinks[i].origin[1] && tileToCheck.destination[0] == mapItemLinks[i].destination[0] && tileToCheck.destination[1] == mapItemLinks[i].destination[1])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
@@ -322,5 +370,16 @@ public static class Pivot
 
         rectTransform.pivot = pivot;                            // change the pivot
         rectTransform.localPosition -= deltaPosition;           // reverse the position change
+    }
+}
+
+public class MapItemLink
+{
+    public int[] origin;
+    public int[] destination;
+    public MapItemLink(int tile1X, int tile1Y, int tile2X, int tile2Y)
+    {
+        origin = new int[2] { tile1X, tile1Y };
+        destination = new int[2] { tile2X, tile2Y };
     }
 }

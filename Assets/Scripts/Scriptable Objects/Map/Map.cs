@@ -14,6 +14,10 @@ public class Map : ScriptableObject
     public int level;
     public int sizeX;
     public int sizeY;
+    [Tooltip("How often the map tiles are connected to each other (0-never connecting, 100-always connecting)")]
+    public int tilesConnectionRatio;
+    [Tooltip("Is it possible to have the map tiles connection crossing each other")]
+    public bool allowTileConnectionCrossingEachOther;
     public Tile[] possibleTiles;
     public int[] possibleTroopsEncountered;
     public int[] possibleEvents;
