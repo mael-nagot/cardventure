@@ -404,7 +404,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1365994908}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -753,6 +753,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 0}
   listOfMaps: {fileID: 11400000, guid: e37d8815ed109c848b572386e321ee3d, type: 2}
+  linePrefab: {fileID: 5421358790377906561, guid: b52f3d6f6ce6e7d439ca269ae14a4e8f,
+    type: 3}
 --- !u!1001 &1367121122
 PrefabInstance:
   m_ObjectHideFlags: 0

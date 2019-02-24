@@ -9,6 +9,9 @@ public class MapScene : MonoBehaviour
     public Map map;
     public ListOfMaps listOfMaps;
     private int[,] mapTilesId;
+    [SerializeField]
+    private GameObject linePrefab;
+
     IEnumerator Start()
     {
         string mapName = selectMap(DataController.instance.getLevel());
@@ -17,6 +20,10 @@ public class MapScene : MonoBehaviour
         loadMapBackground(map);
         generateMap();
         yield return StartCoroutine(displayMap());
+        for (int i = 0; i < map.sizeY; i++)
+        {
+            drawLineBetweenObjects(1, 1, 2, i + 1);
+        }
         shakeObject(1, 1);
     }
 
@@ -195,7 +202,6 @@ public class MapScene : MonoBehaviour
         return 0;
     }
 
-    // To be rewriten, for now it is just to see how it looks
     private IEnumerator displayMap()
     {
         yield return null;
@@ -232,4 +238,89 @@ public class MapScene : MonoBehaviour
         }
     }
 
+    private void drawLineBetweenObjects(int xObj1, int yObj1, int xObj2, int yObj2)
+    {
+        // Getting the map Items for drawing a line in between
+        RectTransform object1RectTransform = getMapItemFromCoordinates(xObj1, yObj1).GetComponent<RectTransform>();
+        RectTransform object2RectTransform = getMapItemFromCoordinates(xObj2, yObj2).GetComponent<RectTransform>();
+
+        // Getting the anchored position of the elements
+        float anchoredY1 = object1RectTransform.anchoredPosition.y;
+        float anchoredY2 = object2RectTransform.anchoredPosition.y;
+
+        // Defining pivot depending on Y position of the 2 elements
+        if (anchoredY1 + 50 > anchoredY2 && anchoredY1 - 50 < anchoredY2)
+        {
+            object1RectTransform.SetPivot(new Vector2(1, 0.5f));
+            object2RectTransform.SetPivot(new Vector2(0, 0.5f));
+        }
+        else if (anchoredY1 + 150 > anchoredY2 && anchoredY1 < anchoredY2)
+        {
+            object1RectTransform.SetPivot(new Vector2(0.95f, 0.65f));
+            object2RectTransform.SetPivot(new Vector2(0.05f, 0.35f));
+        }
+        else if (anchoredY1 - 150 < anchoredY2 && anchoredY1 > anchoredY2)
+        {
+            object1RectTransform.SetPivot(new Vector2(0.95f, 0.35f));
+            object2RectTransform.SetPivot(new Vector2(0.05f, 0.65f));
+        }
+        else if (anchoredY2 > anchoredY1)
+        {
+            object1RectTransform.SetPivot(new Vector2(0.85f, 0.85f));
+            object2RectTransform.SetPivot(new Vector2(0.15f, 0.15f));
+        }
+        else
+        {
+            object1RectTransform.SetPivot(new Vector2(0.85f, 0.15f));
+            object2RectTransform.SetPivot(new Vector2(0.15f, 0.85f));
+        }
+
+        float xLine0 = object1RectTransform.position.x;
+        float yLine0 = object1RectTransform.position.y;
+        float xLine1 = object2RectTransform.position.x;
+        float yLine1 = object2RectTransform.position.y;
+
+        // Instantiating the line prefab in the canvas
+        GameObject canvasObject = GameObject.Find("Canvas");
+        RectTransform imageRectTransform = GameObject.Instantiate(linePrefab, Vector3.zero, Quaternion.identity, canvasObject.transform).GetComponent<RectTransform>();
+
+        // Setting the points to the world map position of the map items
+        Vector3 pointA = new Vector3(xLine0, yLine0, 0);
+        Vector3 pointB = new Vector3(xLine1, yLine1, 0);
+
+        // Getting the Vector between the 2 points
+        Vector3 differenceVector = pointB - pointA;
+
+        // Setting the image arrow to the right position and right size
+        int lineHeight = 10;
+        imageRectTransform.sizeDelta = new Vector2(differenceVector.magnitude / canvasObject.GetComponent<Canvas>().scaleFactor, lineHeight);
+        imageRectTransform.pivot = new Vector2(0, 0.5f);
+        imageRectTransform.position = pointA;
+
+        // Calculating and setting the angle of the line to reach the end point
+        float angle = Mathf.Atan2(differenceVector.y, differenceVector.x) * Mathf.Rad2Deg;
+        imageRectTransform.localRotation = Quaternion.Euler(0, 0, angle);
+
+        // Restoring the Pivot to the previous Position so that the tooltip is correctly displayed
+        object2RectTransform.SetPivot(new Vector2(0.5f, 1));
+        object1RectTransform.SetPivot(new Vector2(0.5f, 1));
+    }
+
+}
+
+public static class Pivot
+{
+    /// <summary>
+    /// Set pivot without changing the position of the element
+    /// </summary>
+    public static void SetPivot(this RectTransform rectTransform, Vector2 pivot)
+    {
+        Vector3 deltaPosition = rectTransform.pivot - pivot;    // get change in pivot
+        deltaPosition.Scale(rectTransform.rect.size);           // apply sizing
+        deltaPosition.Scale(rectTransform.localScale);          // apply scaling
+        deltaPosition = rectTransform.rotation * deltaPosition; // apply rotation
+
+        rectTransform.pivot = pivot;                            // change the pivot
+        rectTransform.localPosition -= deltaPosition;           // reverse the position change
+    }
 }
