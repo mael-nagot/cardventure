@@ -19,6 +19,40 @@ MonoBehaviour:
   bgmFile: {fileID: 8300000, guid: 132e792778883c34dba63300d2d8b206, type: 3}
   bgsFile: {fileID: 8300000, guid: f872fbeed870c452f990f9f27884a45a, type: 3}
   level: 1
-  possibleTiles: 
+  sizeX: 7
+  sizeY: 3
+  possibleTiles:
+  - eventType: 1
+    tilePrefab: {fileID: 4948286907530949593, guid: 2ed2e682d93973e4693305f1f4ec82d5,
+      type: 3}
+    isDefault: 1
+    minNumber: -1
+    maxNumber: -1
+    minX: -1
+    maxX: -1
+  - eventType: 2
+    tilePrefab: {fileID: 5683645538455169196, guid: 511fd5497ffeef940913e77f1dff96bf,
+      type: 3}
+    isDefault: 0
+    minNumber: 5
+    maxNumber: 8
+    minX: 1
+    maxX: 6
+  - eventType: 3
+    tilePrefab: {fileID: 3830456917824058186, guid: aaa20911c1eeb854897d86868c1ed11b,
+      type: 3}
+    isDefault: 0
+    minNumber: 1
+    maxNumber: 2
+    minX: 3
+    maxX: 6
+  - eventType: 4
+    tilePrefab: {fileID: 3617115142093708411, guid: 275d5d6825f981540aae804055e43e26,
+      type: 3}
+    isDefault: 0
+    minNumber: 0
+    maxNumber: 1
+    minX: 4
+    maxX: 6
   possibleTroopsEncountered: 
   possibleEvents: 

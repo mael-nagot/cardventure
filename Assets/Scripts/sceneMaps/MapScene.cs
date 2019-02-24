@@ -8,14 +8,16 @@ public class MapScene : MonoBehaviour
 {
     public Map map;
     public ListOfMaps listOfMaps;
+    private int[,] mapTilesId;
     IEnumerator Start()
     {
         string mapName = selectMap(DataController.instance.getLevel());
         map = listOfMaps.getMap(mapName);
         loadMapSound(map);
         loadMapBackground(map);
-        yield return StartCoroutine(generateMap());
-        shakeObject(1, 2);
+        generateMap();
+        yield return StartCoroutine(displayMap());
+        shakeObject(1, 1);
     }
 
     void Update()
@@ -80,41 +82,150 @@ public class MapScene : MonoBehaviour
         return GameObject.Find("mapItem" + x + "-" + y);
     }
 
+
+    private void generateMap()
+    {
+        Tile[] listOfTiles = map.possibleTiles;
+        int defaultTile = getDefaultTileIndex(listOfTiles);
+        mapTilesId = new int[map.sizeX, map.sizeY];
+        initializeMapWithDefaultTile(defaultTile);
+        AddOtherTilesToMap(listOfTiles, defaultTile);
+        debugMapTilesId();
+    }
+
+    private void initializeMapWithDefaultTile(int defaultTile)
+    {
+        for (int i = 0; i < mapTilesId.GetLength(0); i++)
+        {
+            for (int j = 0; j < mapTilesId.GetLength(1); j++)
+            {
+                if ((i == 0 || i == mapTilesId.GetLength(0) - 1) && j > 0)
+                {
+                    mapTilesId[i, j] = -1;
+                }
+                else
+                {
+                    mapTilesId[i, j] = defaultTile;
+                }
+            }
+        }
+    }
+
+    private void AddOtherTilesToMap(Tile[] listofTiles, int defaultTile)
+    {
+        for (int i = 0; i < listofTiles.Length; i++)
+        {
+            if (!listofTiles[i].isDefault)
+            {
+                int nbOfThisTileInTheMap;
+                int minNbOfTiles = listofTiles[i].minNumber;
+                if (minNbOfTiles == -1) { minNbOfTiles = 0; }
+                int maxNbOfTiles = listofTiles[i].maxNumber;
+                if (maxNbOfTiles == -1) { maxNbOfTiles = (mapTilesId.GetLength(0) * mapTilesId.GetLength(1) - 2); }
+                nbOfThisTileInTheMap = UnityEngine.Random.Range(minNbOfTiles, maxNbOfTiles + 1);
+                for (int j = 0; j < nbOfThisTileInTheMap; j++)
+                {
+                    if (verifyIfTileAvailable(listofTiles[i].minX - 1, listofTiles[i].maxX - 1, defaultTile))
+                    {
+                        int randomX;
+                        int randomY;
+                        while (true)
+                        {
+                            randomX = UnityEngine.Random.Range(listofTiles[i].minX - 1, listofTiles[i].maxX);
+                            randomY = UnityEngine.Random.Range(0, mapTilesId.GetLength(1));
+                            if (mapTilesId[randomX, randomY] == defaultTile)
+                            {
+                                mapTilesId[randomX, randomY] = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private bool verifyIfTileAvailable(int min, int max, int defaultTile)
+    {
+        for (int i = min; i < max + 1; i++)
+        {
+            for (int j = 0; j < mapTilesId.GetLength(1); j++)
+            {
+                if (mapTilesId[i, j] == defaultTile)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // For debugging purpose, to be removed
+    void debugMapTilesId()
+    {
+        string toDebug = "";
+        for (int i = 0; i < mapTilesId.GetLength(0); i++)
+        {
+            toDebug += "[";
+            for (int j = 0; j < mapTilesId.GetLength(1); j++)
+            {
+                if (j == mapTilesId.GetLength(1) - 1)
+                {
+                    toDebug += mapTilesId[i, j];
+                }
+                else
+                {
+                    toDebug += mapTilesId[i, j] + ",";
+                }
+            }
+            toDebug += "]";
+        }
+        Debug.Log(toDebug);
+    }
+
+    private int getDefaultTileIndex(Tile[] listofTiles)
+    {
+        for (int i = 0; i < listofTiles.Length; i++)
+        {
+            if (listofTiles[i].isDefault)
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     // To be rewriten, for now it is just to see how it looks
-    private IEnumerator generateMap()
+    private IEnumerator displayMap()
     {
         yield return null;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < map.sizeX; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < map.sizeY; j++)
             {
-                if (!((i == 0 && j == 0) || (i == 0 && j == 2) || (i == 6 && j == 0) || (i == 6 && j == 2)))
+                if (!((i == 0 && j > 0) || (i == (map.sizeX - 1) && j > 0)))
                 {
-                    float random = UnityEngine.Random.Range(0.0f, 10.0f);
-                    string item = "";
-                    if (random < 1)
-                    {
-                        item = "forestChest";
-                    }
-                    else if (random < 2)
-                    {
-                        item = "forestRest";
-                    }
-                    else if (random < 6)
-                    {
-                        item = "forestQuest";
-                    }
-                    else
-                    {
-                        item = "forestSword";
-                    }
-                    GameObject mapItem = GameObject.Instantiate(Resources.Load("Prefabs/Maps/MapItems/" + item) as GameObject);
+                    GameObject mapItem = GameObject.Instantiate(map.possibleTiles[mapTilesId[i, j]].tilePrefab as GameObject);
                     mapItem.transform.SetParent(GameObject.Find("Canvas").transform);
                     mapItem.name = "mapItem" + (i + 1) + "-" + (j + 1);
                     RectTransform rectTransform = mapItem.GetComponent<RectTransform>();
-                    rectTransform.anchoredPosition = new Vector3((-1000f + i * 330f), (300 - j * 300f), 4);
+                    if (i == 0 || i == (map.sizeX - 1) || map.sizeY == 1)
+                    {
+                        rectTransform.anchoredPosition = new Vector3((-1000f + i * 2000 / (map.sizeX - 1)), 50, 4);
+                    }
+                    else
+                    {
+                        rectTransform.anchoredPosition = new Vector3((-1000f + i * 2000 / (map.sizeX - 1)), (380 - j * 680 / (map.sizeY - 1)), 4);
+                    }
                     rectTransform.pivot = new Vector2(0.5f, 1);
-                    mapItem.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                    if (map.sizeX <= 7 && map.sizeY <= 3)
+                    {
+                        mapItem.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                    }
+                    else
+                    {
+                        mapItem.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+                    }
                     yield return null;
                 }
             }
