@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Newtonsoft.Json;
 
 public class DataController : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class DataController : MonoBehaviour
         if (File.Exists(filePath))
         {
             dataAsJson = File.ReadAllText(filePath);
-            gameData = JsonUtility.FromJson<GameData>(dataAsJson);
+            gameData = JsonConvert.DeserializeObject<GameData>(dataAsJson);
         }
         else
         {
@@ -59,7 +60,7 @@ public class DataController : MonoBehaviour
     /// </summary>
     public void SaveGameData()
     {
-        string dataAsJson = JsonUtility.ToJson(gameData);
+        string dataAsJson = JsonConvert.SerializeObject(gameData, Formatting.Indented);
 
         File.WriteAllText(filePath, dataAsJson);
     }
@@ -84,5 +85,10 @@ public class DataController : MonoBehaviour
     public int getLevel()
     {
         return gameData.level;
+    }
+
+    public string getCurrentMap()
+    {
+        return gameData.currentMap;
     }
 }

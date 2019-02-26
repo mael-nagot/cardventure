@@ -1,1 +1,285 @@
-{"localizationLanguage":"ja","isGameSessionStarted":false,"level":0}
+{
+  "localizationLanguage": "ja",
+  "isGameSessionStarted": true,
+  "level": 1,
+  "currentMap": "Forest",
+  "mapTiles": [
+    [
+      0,
+      -1,
+      -1
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      2,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      -1,
+      -1
+    ]
+  ],
+  "mapItemLinks": [
+    {
+      "origin": [
+        1,
+        1
+      ],
+      "destination": [
+        2,
+        1
+      ]
+    },
+    {
+      "origin": [
+        1,
+        1
+      ],
+      "destination": [
+        2,
+        2
+      ]
+    },
+    {
+      "origin": [
+        1,
+        1
+      ],
+      "destination": [
+        2,
+        3
+      ]
+    },
+    {
+      "origin": [
+        2,
+        1
+      ],
+      "destination": [
+        3,
+        1
+      ]
+    },
+    {
+      "origin": [
+        2,
+        2
+      ],
+      "destination": [
+        3,
+        2
+      ]
+    },
+    {
+      "origin": [
+        2,
+        3
+      ],
+      "destination": [
+        3,
+        3
+      ]
+    },
+    {
+      "origin": [
+        3,
+        1
+      ],
+      "destination": [
+        4,
+        1
+      ]
+    },
+    {
+      "origin": [
+        3,
+        2
+      ],
+      "destination": [
+        4,
+        2
+      ]
+    },
+    {
+      "origin": [
+        3,
+        3
+      ],
+      "destination": [
+        4,
+        3
+      ]
+    },
+    {
+      "origin": [
+        4,
+        1
+      ],
+      "destination": [
+        5,
+        1
+      ]
+    },
+    {
+      "origin": [
+        4,
+        2
+      ],
+      "destination": [
+        5,
+        2
+      ]
+    },
+    {
+      "origin": [
+        4,
+        3
+      ],
+      "destination": [
+        5,
+        3
+      ]
+    },
+    {
+      "origin": [
+        5,
+        1
+      ],
+      "destination": [
+        6,
+        1
+      ]
+    },
+    {
+      "origin": [
+        5,
+        2
+      ],
+      "destination": [
+        6,
+        2
+      ]
+    },
+    {
+      "origin": [
+        5,
+        3
+      ],
+      "destination": [
+        6,
+        3
+      ]
+    },
+    {
+      "origin": [
+        6,
+        1
+      ],
+      "destination": [
+        7,
+        1
+      ]
+    },
+    {
+      "origin": [
+        6,
+        2
+      ],
+      "destination": [
+        7,
+        1
+      ]
+    },
+    {
+      "origin": [
+        6,
+        3
+      ],
+      "destination": [
+        7,
+        1
+      ]
+    },
+    {
+      "origin": [
+        2,
+        1
+      ],
+      "destination": [
+        3,
+        2
+      ]
+    },
+    {
+      "origin": [
+        2,
+        2
+      ],
+      "destination": [
+        3,
+        3
+      ]
+    },
+    {
+      "origin": [
+        3,
+        2
+      ],
+      "destination": [
+        4,
+        3
+      ]
+    },
+    {
+      "origin": [
+        4,
+        1
+      ],
+      "destination": [
+        5,
+        2
+      ]
+    },
+    {
+      "origin": [
+        4,
+        3
+      ],
+      "destination": [
+        5,
+        2
+      ]
+    },
+    {
+      "origin": [
+        5,
+        2
+      ],
+      "destination": [
+        6,
+        3
+      ]
+    }
+  ]
+}

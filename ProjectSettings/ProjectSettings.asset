@@ -672,9 +672,9 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 2
-  cloudProjectId: d47428c1-9bc1-451b-9c5a-ed228e48105b
+  cloudProjectId: 7fba7243-18c5-46c4-b130-135fc3b805b1
   framebufferDepthMemorylessMode: 0
-  projectName: cardventure
+  projectName: tanCard
   organizationId: nagotmael
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

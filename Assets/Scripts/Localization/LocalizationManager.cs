@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -61,7 +62,7 @@ public class LocalizationManager : MonoBehaviour
             dataAsJson = File.ReadAllText(filePath);
         }
 
-        LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+        LocalizationData loadedData = JsonConvert.DeserializeObject<LocalizationData>(dataAsJson);
 
         for (int i = 0; i < loadedData.items.Length; i++)
         {

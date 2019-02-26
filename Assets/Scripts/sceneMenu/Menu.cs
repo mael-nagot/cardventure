@@ -69,5 +69,6 @@ public class Menu : MonoBehaviour
     {
         DataController.instance.gameData.isGameSessionStarted = true;
         DataController.instance.gameData.level = 1;
+        DataController.instance.gameData.currentMap = "Forest";
     }
 }

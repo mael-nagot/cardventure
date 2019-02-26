@@ -11,31 +11,30 @@ public class MapScene : MonoBehaviour
     private int[,] mapTilesId;
     [SerializeField]
     private GameObject linePrefab;
-    private List<MapItemLink> mapItemLinks = new List<MapItemLink>();
+    private List<MapItemLink> mapItemLinks;
 
     IEnumerator Start()
     {
-        string mapName = selectMap(DataController.instance.getLevel());
+        string mapName = DataController.instance.getCurrentMap();
         map = listOfMaps.getMap(mapName);
         loadMapSound(map);
         loadMapBackground(map);
-        generateMap();
+        loadMapGameData();
+        if (mapTilesId == null || mapItemLinks == null)
+        {
+            generateMap();
+            generateMapItemLinks();
+        }
         yield return StartCoroutine(displayMap());
-        generateMapItemLinks();
         displayMapItemLinks();
-
+        addMapDataToGameData();
+        DataController.instance.SaveGameData();
         shakeObject(1, 1);
     }
 
     void Update()
     {
 
-    }
-
-    // To be rewritten.
-    private string selectMap(int level)
-    {
-        return "Forest";
     }
 
     /// <summary>
@@ -56,6 +55,13 @@ public class MapScene : MonoBehaviour
     {
         GameObject.Instantiate(map.mapBackground);
     }
+
+    private void loadMapGameData()
+    {
+        mapTilesId = DataController.instance.gameData.mapTiles;
+        mapItemLinks = DataController.instance.gameData.mapItemLinks;
+    }
+
 
     /// <summary>
     /// This method makes a map item game object shaking so that the player understands he can interact with it.
@@ -292,6 +298,8 @@ public class MapScene : MonoBehaviour
 
     private void generateMapItemLinks()
     {
+        mapItemLinks = new List<MapItemLink>();
+
         // Add links starting from the Map Item on the left
         for (int i = 0; i < map.sizeY; i++)
         {
@@ -352,6 +360,12 @@ public class MapScene : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void addMapDataToGameData()
+    {
+        DataController.instance.gameData.mapTiles = mapTilesId;
+        DataController.instance.gameData.mapItemLinks = mapItemLinks;
     }
 
 }

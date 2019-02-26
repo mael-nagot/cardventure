@@ -21,6 +21,8 @@ MonoBehaviour:
   level: 1
   sizeX: 7
   sizeY: 3
+  tilesConnectionRatio: 40
+  allowTileConnectionCrossingEachOther: 0
   possibleTiles:
   - eventType: 1
     tilePrefab: {fileID: 4948286907530949593, guid: 2ed2e682d93973e4693305f1f4ec82d5,
