@@ -218,6 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ButtonFrench: {fileID: 379973564}
   ButtonEnglish: {fileID: 1309994544}
+  TextLanguage: {fileID: 106396644}
 --- !u!1 &106396644
 GameObject:
   m_ObjectHideFlags: 0

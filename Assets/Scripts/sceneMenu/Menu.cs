@@ -18,17 +18,31 @@ public class Menu : MonoBehaviour
     void Awake()
     {
         buttonNewGame.onClick.AddListener(() => StartCoroutine(onStartNewGameTap()));
+        buttonContinueGame.onClick.AddListener(() => StartCoroutine(onContinueNewGameTap()));
     }
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.2f);
         // Tween to make the menu items slightly changing color over time
         Sequence menuItemAnimation = DOTween.Sequence();
         Color menuItemTargetColor = new Color32(79, 42, 8, 220);
-        menuItemAnimation
-                .Append(GameObject.Find("NewGame").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
-                .Join(GameObject.Find("Continue").GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
-                .SetLoops(-1, LoopType.Yoyo);
+        if (!DataController.instance.gameData.isGameSessionStarted)
+        {
+            // If no game ongoing, deactivate continue button
+            buttonContinueGame.interactable = false;
+            Color buttonTextColor = buttonContinueGame.GetComponentInChildren<Text>().color;
+            buttonTextColor.a = 0.5f;
+            buttonContinueGame.GetComponentInChildren<Text>().color = buttonTextColor;
+            menuItemAnimation
+                    .Append(buttonNewGame.gameObject.GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
+                    .SetLoops(-1, LoopType.Yoyo);
+        }
+        else
+        {
+            menuItemAnimation
+                    .Append(buttonNewGame.gameObject.GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
+                    .Join(buttonContinueGame.gameObject.GetComponentInChildren<Text>().DOColor(menuItemTargetColor, 2))
+                    .SetLoops(-1, LoopType.Yoyo);
+        }
 
         // Tween to make the Particles system displaying the leaves moving right and left so the leaves spread everywhere
         Sequence leaveParticlesSystemAnimation = DOTween.Sequence();
@@ -53,12 +67,37 @@ public class Menu : MonoBehaviour
     /// <summary>
     /// Called after clicking on the "New Game" button.
     /// It loads the new game data and load the map scene.
+    /// If a game was ongoing it also opens a modal panel to confirm previous game data deletion.
     /// </summary>
     public IEnumerator onStartNewGameTap()
     {
         playClickSound();
+        if (DataController.instance.gameData.isGameSessionStarted)
+        {
+            StartCoroutine(UIManager.instance.modalPanelChoice("new_game_confirm", new string[] { "yes", "no" }));
+            yield return new WaitForSeconds(0.1f);
+            while (UIManager.instance.modalPanelAnswer == null)
+            {
+                yield return null;
+            }
+            playClickSound();
+            string answer = UIManager.instance.modalPanelAnswer;
+            if (answer == "no")
+            {
+                yield break;
+            }
+        }
+
         initializeGameData();
-        particleSys.gameObject.SetActive(false);
+        yield return StartCoroutine(LoadingScreenController.instance.loadScene("map"));
+    }
+
+    /// <summary>
+    /// Called after clicking on the "Continue" button.
+    /// It calls the map scene.
+    /// </summary>
+    public IEnumerator onContinueNewGameTap()
+    {
         yield return StartCoroutine(LoadingScreenController.instance.loadScene("map"));
     }
 
@@ -70,5 +109,7 @@ public class Menu : MonoBehaviour
         DataController.instance.gameData.isGameSessionStarted = true;
         DataController.instance.gameData.level = 1;
         DataController.instance.gameData.currentMap = "Forest";
+        DataController.instance.gameData.mapItemLinks = null;
+        DataController.instance.gameData.mapTiles = null;
     }
 }

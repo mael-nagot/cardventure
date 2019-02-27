@@ -660,6 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 5
+  logo: {fileID: 695542720}
 --- !u!1001 &8032628793347430336
 PrefabInstance:
   m_ObjectHideFlags: 0

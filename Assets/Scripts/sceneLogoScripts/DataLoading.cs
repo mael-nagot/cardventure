@@ -12,6 +12,8 @@ public class DataLoading : MonoBehaviour
     [SerializeField]
     private float waitTime;
     private bool nextSceneIsLoading = false;
+    [SerializeField]
+    private GameObject logo;
 
     void Awake()
     {
@@ -24,10 +26,10 @@ public class DataLoading : MonoBehaviour
         // Tween to make the logo fade in and then fade out after a while
         Sequence logoDisplaySequence = DOTween.Sequence();
         logoDisplaySequence
-                .Append(GameObject.Find("Logo").transform.DOScale(new Vector3(1, 1, 1), waitTime * 1.5f / 5))
-                .Join(GameObject.Find("Logo").GetComponent<Image>().DOFade(1, waitTime * 2.5f / 5))
+                .Append(logo.gameObject.transform.DOScale(new Vector3(1, 1, 1), waitTime * 1.5f / 5))
+                .Join(logo.gameObject.GetComponent<Image>().DOFade(1, waitTime * 2.5f / 5))
                 .AppendInterval(1)
-                .Append(GameObject.Find("Logo").GetComponent<Image>().DOFade(0, waitTime * 1.5f / 5))
+                .Append(logo.gameObject.GetComponent<Image>().DOFade(0, waitTime * 1.5f / 5))
                 .OnComplete(() => LoadNextScene());
         // Load the localization if a save file exists and a language has already been set.
         if (!String.IsNullOrEmpty(DataController.instance.gameData.localizationLanguage))

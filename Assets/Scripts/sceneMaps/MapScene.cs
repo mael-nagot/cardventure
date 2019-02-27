@@ -12,6 +12,8 @@ public class MapScene : MonoBehaviour
     [SerializeField]
     private GameObject linePrefab;
     private List<MapItemLink> mapItemLinks;
+    [SerializeField]
+    private GameObject canvasObject;
 
     IEnumerator Start()
     {
@@ -66,8 +68,8 @@ public class MapScene : MonoBehaviour
     /// <summary>
     /// This method makes a map item game object shaking so that the player understands he can interact with it.
     /// </summary>
-    /// <param name="int x">x of the map item on the map (1-7)</param>
-    /// <param name="int y">y of the map item on the map (1-3)</param>
+    /// <param name="int x">x of the map item on the map</param>
+    /// <param name="int y">y of the map item on the map</param>
     private void shakeObject(int x, int y)
     {
         GameObject objectToAnimate = getMapItemFromCoordinates(x, y);
@@ -77,8 +79,8 @@ public class MapScene : MonoBehaviour
     /// <summary>
     /// This method make a shaking map item game object stopping to shake
     /// </summary>
-    /// <param name="int x">x of the map item on the map (1-7)</param>
-    /// <param name="int y">y of the map item on the map (1-3)</param>
+    /// <param name="int x">x of the map item on the map</param>
+    /// <param name="int y">y of the map item on the map</param>
     private void stopShakingObject(int x, int y)
     {
         GameObject objectToAnimate = getMapItemFromCoordinates(x, y);
@@ -88,14 +90,18 @@ public class MapScene : MonoBehaviour
     /// <summary>
     /// This method gets the map item game object from its position.
     /// </summary>
-    /// <param name="int x">x of the map item on the map (1-7)</param>
-    /// <param name="int y">y of the map item on the map (1-3)</param>
+    /// <param name="int x">x of the map item on the map</param>
+    /// <param name="int y">y of the map item on the map</param>
     private GameObject getMapItemFromCoordinates(int x, int y)
     {
         return GameObject.Find("mapItem" + x + "-" + y);
     }
 
 
+    /// <summary>
+    /// This method set the mapTilesId 2D Array with some tiles 
+    /// based on the configuration of the map scriptable object.
+    /// </summary>
     private void generateMap()
     {
         Tile[] listOfTiles = map.possibleTiles;
@@ -105,6 +111,11 @@ public class MapScene : MonoBehaviour
         AddOtherTilesToMap(listOfTiles, defaultTile);
     }
 
+    /// <summary>
+    /// This method initialize mapTilesId 2D Array with the default tile
+    /// configured in the map scriptable object.
+    /// </summary>
+    /// <param name="int defaultTile">The id of the default tile</param>
     private void initializeMapWithDefaultTile(int defaultTile)
     {
         for (int i = 0; i < mapTilesId.GetLength(0); i++)
@@ -123,6 +134,12 @@ public class MapScene : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method set all the non-default tiles to mapTilesId 2D Array
+    /// based on the list of possible tiles configured in the map scriptable object
+    /// </summary>
+    /// <param name="Tile[] listofTiles">The array of possible tiles defined in the map scriptable object</param>
+    /// <param name="int defaultTile">The id of the default tile</param>
     private void AddOtherTilesToMap(Tile[] listofTiles, int defaultTile)
     {
         for (int i = 0; i < listofTiles.Length; i++)
@@ -157,6 +174,13 @@ public class MapScene : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method verify that in the mapTilesId 2D Array, between 2 x values, there is a tile
+    /// that has the default tile value.
+    /// </summary>
+    /// <param name="int min">The minimum x we want to verify if available tile</param>
+    /// <param name="int max">The maximum x we want to verify if available tile</param>
+    /// <param name="int defaultTile">The id of the default tile</param>
     private bool verifyIfTileAvailable(int min, int max, int defaultTile)
     {
         for (int i = min; i < max + 1; i++)
@@ -172,6 +196,10 @@ public class MapScene : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Return the id of the default tile from the array of possible Tiles defined in the map scriptable object
+    /// </summary>
+    /// <param name="Tile[] listofTiles">The array of possible Tiles</param>
     private int getDefaultTileIndex(Tile[] listofTiles)
     {
         for (int i = 0; i < listofTiles.Length; i++)
@@ -184,6 +212,9 @@ public class MapScene : MonoBehaviour
         return 0;
     }
 
+    /// <summary>
+    /// Display all the map tiles by instantiating their prefab
+    /// </summary>
     private IEnumerator displayMap()
     {
         yield return null;
@@ -194,7 +225,7 @@ public class MapScene : MonoBehaviour
                 if (!((i == 0 && j > 0) || (i == (map.sizeX - 1) && j > 0)))
                 {
                     GameObject mapItem = GameObject.Instantiate(map.possibleTiles[mapTilesId[i, j]].tilePrefab as GameObject);
-                    mapItem.transform.SetParent(GameObject.Find("Canvas").transform);
+                    mapItem.transform.SetParent(canvasObject.transform);
                     mapItem.name = "mapItem" + (i + 1) + "-" + (j + 1);
                     RectTransform rectTransform = mapItem.GetComponent<RectTransform>();
                     if (i == 0 || i == (map.sizeX - 1) || map.sizeY == 1)
@@ -206,6 +237,7 @@ public class MapScene : MonoBehaviour
                         rectTransform.anchoredPosition = new Vector3((-1000f + i * 2000 / (map.sizeX - 1)), (380 - j * 680 / (map.sizeY - 1)), 4);
                     }
                     rectTransform.pivot = new Vector2(0.5f, 1);
+                    // decreasing the tiles size on big maps
                     if (map.sizeX <= 7 && map.sizeY <= 3)
                     {
                         mapItem.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
@@ -220,6 +252,9 @@ public class MapScene : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Draw a line between 2 Map Tiles
+    /// </summary>
     private void drawLineBetweenObjects(int xObj1, int yObj1, int xObj2, int yObj2)
     {
         // Getting the map Items for drawing a line in between
@@ -263,7 +298,6 @@ public class MapScene : MonoBehaviour
         float yLine1 = object2RectTransform.position.y;
 
         // Instantiating the line prefab in the canvas
-        GameObject canvasObject = GameObject.Find("Canvas");
         RectTransform imageRectTransform = GameObject.Instantiate(linePrefab, Vector3.zero, Quaternion.identity, canvasObject.transform).GetComponent<RectTransform>();
 
         // Setting the points to the world map position of the map items
@@ -296,6 +330,10 @@ public class MapScene : MonoBehaviour
         object1RectTransform.SetPivot(new Vector2(0.5f, 1));
     }
 
+    /// <summary>
+    /// Populate mapItemLinks list with all connections between the tiles
+    /// The connections are generated randomly based on configuration defined in map scriptable object
+    /// </summary>
     private void generateMapItemLinks()
     {
         mapItemLinks = new List<MapItemLink>();
@@ -341,6 +379,9 @@ public class MapScene : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Display all the connections between map tiles
+    /// </summary>
     private void displayMapItemLinks()
     {
         for (int i = 0; i < mapItemLinks.Count; i++)
@@ -349,6 +390,13 @@ public class MapScene : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Return true if the 2 map tiles are connected
+    /// </summary>
+    /// <param name="int tile1X">X Coordinate of first map tile</param>
+    /// <param name="int tile1Y">Y Coordinate of first map tile</param>
+    /// <param name="int tile2X">X Coordinate of second map tile</param>
+    /// <param name="int tile2Y">Y Coordinate of second map tile</param>
     private bool areMapItemConnected(int tile1X, int tile1Y, int tile2X, int tile2Y)
     {
         MapItemLink tileToCheck = new MapItemLink(tile1X, tile1Y, tile2X, tile2Y);
@@ -362,6 +410,9 @@ public class MapScene : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Add the map data in the gameData so that they can be saved later on.
+    /// </summary>
     private void addMapDataToGameData()
     {
         DataController.instance.gameData.mapTiles = mapTilesId;

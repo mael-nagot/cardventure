@@ -9,6 +9,8 @@ public class LanguageSelection : MonoBehaviour
 {
     public Button ButtonFrench;
     public Button ButtonEnglish;
+    [SerializeField]
+    private GameObject TextLanguage;
 
     void Awake()
     {
@@ -24,14 +26,14 @@ public class LanguageSelection : MonoBehaviour
         // Tween to make the flags and the text fade in when the scene is loaded
         Sequence flagFadeIn = DOTween.Sequence();
         flagFadeIn
-                .Append(GameObject.Find("TextLanguage").GetComponent<Text>().DOFade(1, 1))
-                .Join(GameObject.Find("ButtonFrench").GetComponent<Image>().DOFade(1, 1))
-                .Join(GameObject.Find("ButtonEnglish").GetComponent<Image>().DOFade(1, 1));
+                .Append(TextLanguage.GetComponent<Text>().DOFade(1, 1))
+                .Join(ButtonFrench.gameObject.GetComponent<Image>().DOFade(1, 1))
+                .Join(ButtonEnglish.gameObject.GetComponent<Image>().DOFade(1, 1));
         // Tween for looping the flag animation
         Sequence flagAnimation = DOTween.Sequence();
         flagAnimation
-                .Append(GameObject.Find("ButtonFrench").GetComponent<Image>().transform.DOScale(new Vector3(0.8f, 0.8f, 1), 1))
-                .Join(GameObject.Find("ButtonEnglish").GetComponent<Image>().transform.DOScale(new Vector3(0.8f, 0.8f, 1), 1))
+                .Append(ButtonFrench.gameObject.GetComponent<Image>().transform.DOScale(new Vector3(0.8f, 0.8f, 1), 1))
+                .Join(ButtonEnglish.gameObject.GetComponent<Image>().transform.DOScale(new Vector3(0.8f, 0.8f, 1), 1))
                 .SetLoops(-1, LoopType.Yoyo);
         StartCoroutine(fadeOutFlagsAndLoadScene());
     }
@@ -48,9 +50,9 @@ public class LanguageSelection : MonoBehaviour
         // Tween to fade out the flags and the text once the localization is fully loaded
         Sequence flagFadeOut = DOTween.Sequence();
         flagFadeOut
-            .Append(GameObject.Find("TextLanguage").GetComponent<Text>().DOFade(0, 1))
-            .Join(GameObject.Find("ButtonFrench").GetComponent<Image>().DOFade(0, 1))
-            .Join(GameObject.Find("ButtonEnglish").GetComponent<Image>().DOFade(0, 1));
+            .Append(TextLanguage.GetComponent<Text>().DOFade(0, 1))
+            .Join(ButtonFrench.gameObject.GetComponent<Image>().DOFade(0, 1))
+            .Join(ButtonEnglish.gameObject.GetComponent<Image>().DOFade(0, 1));
         yield return new WaitForSeconds(1);
         yield return StartCoroutine(LoadingScreenController.instance.loadScene("menu"));
     }

@@ -7,6 +7,10 @@
     { "key": "help_menu", "value": "Help" },
     { "key": "quit_game_menu", "value": "Quit game" },
     { "key": "quit_confirm", "value": "Are you sure you want to quit?" },
+    {
+      "key": "new_game_confirm",
+      "value": "Are you sure you want to start a new game? The previous one will be deleted!"
+    },
     { "key": "loading", "value": "Loading" },
     { "key": "chest_map_item_description", "value": "Chest" },
     { "key": "quest_map_item_description", "value": "Unknown" },

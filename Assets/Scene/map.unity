@@ -755,6 +755,7 @@ MonoBehaviour:
   listOfMaps: {fileID: 11400000, guid: e37d8815ed109c848b572386e321ee3d, type: 2}
   linePrefab: {fileID: 5421358790377906561, guid: b52f3d6f6ce6e7d439ca269ae14a4e8f,
     type: 3}
+  canvasObject: {fileID: 865270724}
 --- !u!1001 &1367121122
 PrefabInstance:
   m_ObjectHideFlags: 0

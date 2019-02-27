@@ -6,6 +6,10 @@
     { "key": "settings_game_menu", "value": "Paramètres" },
     { "key": "help_menu", "value": "Aide" },
     { "key": "quit_game_menu", "value": "Quitter" },
+    {
+      "key": "new_game_confirm",
+      "value": "Voulez-vous vraiment commencer une nouvelle partie ? Votre run précédent sera écrasé !"
+    },
     { "key": "quit_confirm", "value": "Voulez-vous vraiment quitter le jeu ?" },
     { "key": "loading", "value": "Chargement" },
     { "key": "chest_map_item_description", "value": "Coffre" },

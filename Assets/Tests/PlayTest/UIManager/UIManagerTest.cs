@@ -123,13 +123,19 @@ namespace Tests
         [SetUp]
         public void loadTestScene()
         {
-            SceneManager.LoadScene("testScene", LoadSceneMode.Single);
+            if (SceneManager.GetActiveScene().name != "testScene")
+            {
+                SceneManager.LoadScene("testScene", LoadSceneMode.Single);
+            }
         }
 
         [TearDown]
-        public void unLoadTestScene()
+        public void unloadTestScene()
         {
-            SceneManager.UnloadSceneAsync("testScene");
+            if (SceneManager.GetActiveScene().name != "testScene")
+            {
+                SceneManager.UnloadSceneAsync("testScene");
+            }
         }
 
         [TearDown]
